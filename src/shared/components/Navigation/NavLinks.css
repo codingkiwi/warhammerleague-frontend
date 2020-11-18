@@ -16,7 +16,7 @@
   
   .nav-links a {
     border: 1px solid transparent;
-    color: #292929;
+    color: #1D5886;
     text-decoration: none;
     padding: 0.5rem;
   }
@@ -58,7 +58,7 @@
     }
   
     .nav-links a {
-      color: white;
+      color: #1D5886;
       text-decoration: none;
     }
   
