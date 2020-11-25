@@ -8,7 +8,6 @@ import {
 } from 'react-router-dom';
 
 import Auth from './user/pages/Auth';
-import CreateLeague from './league/pages/CreateLeague';
 import MainNavigation from './shared/components/Navigation/MainNavigation';
 import { AuthContext } from './shared/context/auth-context';
 import { useAuth } from './shared/hooks/auth-hook';
@@ -25,9 +24,6 @@ const App = () => {
 				<Route path='/' exact>
 					<p>Logged In Home</p>
 				</Route>
-				<Route path='/leagues/create' exact>
-					<CreateLeague />
-				</Route>
 				<Redirect to='/' />
 			</Switch>
 		);
@@ -39,7 +35,7 @@ const App = () => {
 				</Route>
 				<Route path='/auth' exact>
 					<Auth />
-				</Route>				
+				</Route>
 				<Redirect to='/auth' />
 			</Switch>
 		);
