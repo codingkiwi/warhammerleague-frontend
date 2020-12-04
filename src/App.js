@@ -1,4 +1,3 @@
-
 import React from 'react'; //import Suspense if using lazy loading below
 import {
 	BrowserRouter as Router,
@@ -9,13 +8,14 @@ import {
 
 import Auth from './user/pages/Auth';
 import CreateLeague from './league/pages/CreateLeague';
+import LeagueList from './league/pages/LeagueList';
+import LeagueDetails from './league/pages/LeagueDetails';
 import MainNavigation from './shared/components/Navigation/MainNavigation';
 import { AuthContext } from './shared/context/auth-context';
 import { useAuth } from './shared/hooks/auth-hook';
 
-
 const App = () => {
-  const { userId, token, login, logout } = useAuth();
+	const { userId, token, login, logout } = useAuth();
 
 	let routes;
 
@@ -23,12 +23,18 @@ const App = () => {
 		routes = (
 			<Switch>
 				<Route path='/' exact>
-					<p>Logged In Home</p>
+					<Redirect to='/leagues' />
+				</Route>
+				<Route path='/leagues' exact>
+					<LeagueList />
 				</Route>
 				<Route path='/leagues/create' exact>
 					<CreateLeague />
 				</Route>
-				<Redirect to='/' />
+				<Route path='/leagues/:leagueId' exact>
+					<LeagueDetails />
+				</Route>
+				{/* <Redirect to='/' /> */}
 			</Switch>
 		);
 	} else {
@@ -39,8 +45,8 @@ const App = () => {
 				</Route>
 				<Route path='/auth' exact>
 					<Auth />
-				</Route>				
-				<Redirect to='/auth' />
+				</Route>
+				{/* <Redirect to='/auth' /> */}
 			</Switch>
 		);
 	}
@@ -64,12 +70,12 @@ const App = () => {
 							</div>
 						}
 					> */}
-						{routes}
+					{routes}
 					{/* </Suspense> */}
 				</main>
 			</Router>
 		</AuthContext.Provider>
 	);
-}
+};
 
 export default App;
