@@ -19,11 +19,12 @@ const LeagueList = (props) => {
 				setLeagueList(responseData.leagues);
 			} catch (err) {
 				console.log(err.message);
-				console.log(isLoading + error + clearError);
 			}
 		};
 		fetchLeagues();
 	}, [sendRequest]);
+
+	console.log(isLoading + error + clearError);
 
 	return leagueList.map((league) => (
 		<ul>
