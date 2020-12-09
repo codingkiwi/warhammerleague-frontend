@@ -19,6 +19,7 @@ const LeagueList = (props) => {
 				setLeagueList(responseData.leagues);
 			} catch (err) {
 				console.log(err.message);
+				console.log(isLoading + error + clearError);
 			}
 		};
 		fetchLeagues();
