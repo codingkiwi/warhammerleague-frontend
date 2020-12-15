@@ -37,18 +37,21 @@ const CreateLeague = (props) => {
 	const history = useHistory();
 
 	const leagueSubmitHandler = async (event) => {
-        event.preventDefault();
-        
+		event.preventDefault();
+
 		try {
 			await sendRequest(
 				process.env.REACT_APP_BACKEND_URL + '/leagues/',
 				'POST',
 				JSON.stringify({
-                    name: formState.inputs.name.value,
-                    description: formState.inputs.description.value,
-                    location: formState.inputs.location.value
-                }),
-				{ 'Content-Type': 'application/json', Authorization: 'Bearer ' + auth.token }
+					name: formState.inputs.name.value,
+					description: formState.inputs.description.value,
+					location: formState.inputs.location.value,
+				}),
+				{
+					'Content-Type': 'application/json',
+					Authorization: 'Bearer ' + auth.token,
+				}
 			);
 			history.push('/');
 		} catch (err) {}
