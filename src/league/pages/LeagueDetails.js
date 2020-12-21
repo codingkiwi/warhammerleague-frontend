@@ -50,6 +50,7 @@ const LeagueDetails = (props) => {
 
 	const addParticipantHandler = async () => {
 		setParticipantAdded(true);
+		setAlreadyJoined(true);
 		console.log('participant added');
 		try {
 			await sendRequest(
@@ -86,7 +87,7 @@ const LeagueDetails = (props) => {
 				}
 				{!alreadyJoined ? <Button onClick={addParticipantHandler} type='submit'>
 					JOIN LEAGUE
-				</Button> : <p>Already Logged In</p>}
+				</Button> : <p>Already Joined</p>}
 			</div>
 		);
 	}

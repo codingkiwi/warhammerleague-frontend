@@ -47,6 +47,7 @@ const CreateLeague = (props) => {
 					name: formState.inputs.name.value,
 					description: formState.inputs.description.value,
 					location: formState.inputs.location.value,
+					participantId: auth.userId,
 				}),
 				{
 					'Content-Type': 'application/json',
