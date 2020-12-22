@@ -31,7 +31,6 @@ const LeagueDetails = (props) => {
 						Authorization: 'Bearer ' + auth.token,
 					}
 				);
-				console.log(responseData.league.players);
 				setLeagueDetails(responseData.league);
 
 				if(responseData.joined === "true"){

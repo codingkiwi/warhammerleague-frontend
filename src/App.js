@@ -9,6 +9,7 @@ import {
 import Auth from './user/pages/Auth';
 import CreateLeague from './league/pages/CreateLeague';
 import LeagueList from './league/pages/LeagueList';
+import LeagueListJoined from './league/pages/LeagueListJoined';
 import LeagueDetails from './league/pages/LeagueDetails';
 import MainNavigation from './shared/components/Navigation/MainNavigation';
 import { AuthContext } from './shared/context/auth-context';
@@ -23,10 +24,13 @@ const App = () => {
 		routes = (
 			<Switch>
 				<Route path='/' exact>
-					<Redirect to='/leagues' />
+					<Redirect to='/leagues/explore' />
+				</Route>
+				<Route path='/leagues/explore' exact>
+					<LeagueList />
 				</Route>
 				<Route path='/leagues' exact>
-					<LeagueList />
+					<LeagueListJoined />
 				</Route>
 				<Route path='/leagues/create' exact>
 					<CreateLeague />
