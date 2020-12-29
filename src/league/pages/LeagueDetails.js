@@ -13,12 +13,12 @@ const LeagueDetails = (props) => {
 
 	const leagueId = useParams().leagueId;
 	const [leagueDetails, setLeagueDetails] = useState();
-	const [participantAdded, setParticipantAdded] = useState(false);
+	const [participantsChanged, setParticipantsChanged] = useState(false);
 	const [alreadyJoined, setAlreadyJoined] = useState(false);
 
 	useEffect(() => {
 		const fetchLeagues = async () => {
-			setParticipantAdded(false);
+			setParticipantsChanged(false);
 			try {
 				const responseData = await sendRequest(
 					process.env.REACT_APP_BACKEND_URL + '/leagues/' + leagueId,
@@ -33,22 +33,20 @@ const LeagueDetails = (props) => {
 				);
 				setLeagueDetails(responseData.league);
 
-				if(responseData.joined === "true"){
+				if (responseData.joined === 'true') {
 					setAlreadyJoined(true);
 				}
-
 			} catch (err) {
 				console.log(err.message);
 			}
 		};
 		fetchLeagues();
-	}, [sendRequest, leagueId, auth.token, participantAdded, auth.userId]);
+	}, [sendRequest, leagueId, auth.token, participantsChanged, auth.userId]);
 
 	console.log(isLoading + error + clearError); //hack to remove warnings so netlify can build
-	console.log(alreadyJoined);
 
 	const addParticipantHandler = async () => {
-		setParticipantAdded(true);
+		setParticipantsChanged(true);
 		setAlreadyJoined(true);
 		console.log('participant added');
 		try {
@@ -69,6 +67,31 @@ const LeagueDetails = (props) => {
 		} catch (err) {}
 	};
 
+	const removeSelfAsParticipantHandler = async () => {
+		try {
+			await sendRequest(
+				process.env.REACT_APP_BACKEND_URL +
+					'/leagues/' +
+					leagueId +
+					'/removeparticipant/' +
+					auth.userId,
+				'PATCH',
+				JSON.stringify({
+					participantId: auth.userId,
+				}),
+				{
+					'Content-Type': 'application/json',
+					Authorization: 'Bearer ' + auth.token,
+				}
+			);
+			console.log('removed as participant');
+		} catch (err) {
+			console.log(err.message);
+		}
+		setParticipantsChanged(true);
+		setAlreadyJoined(false);
+	};
+
 	if (!leagueDetails) {
 		return <p>no league details</p>;
 	} else {
@@ -84,9 +107,21 @@ const LeagueDetails = (props) => {
 						))}
 					</ul>
 				}
-				{!alreadyJoined ? <Button onClick={addParticipantHandler} type='submit'>
-					JOIN LEAGUE
-				</Button> : <p>Already Joined</p>}
+				{!alreadyJoined ? (
+					<Button onClick={addParticipantHandler} type='submit'>
+						JOIN LEAGUE
+					</Button>
+				) : (
+					<p>Already Joined</p>
+				)}
+				{alreadyJoined && (
+					<Button
+						onClick={removeSelfAsParticipantHandler}
+						type='submit'
+					>
+						LEAVE LEAGUE
+					</Button>
+				)}
 			</div>
 		);
 	}

@@ -15,10 +15,11 @@ const LeagueList = (props) => {
 				const responseData = await sendRequest(
 					process.env.REACT_APP_BACKEND_URL + '/leagues'
 				);
-				console.log(responseData);
 				setLeagueList(responseData.leagues);
 			} catch (err) {
-				console.log(err.message);
+				if(err){
+					console.log(err.message);
+				} 
 			}
 		};
 		fetchLeagues();
