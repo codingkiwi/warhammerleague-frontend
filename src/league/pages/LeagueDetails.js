@@ -5,6 +5,8 @@ import Button from '../../shared/components/FormElements/Button';
 import { useHttpClient } from '../../shared/hooks/http-hook';
 
 import './LeagueDetails.css';
+import ErrorModal from '../../shared/components/UIElements/ErrorModal';
+import LoadingSpinner from '../../shared/components/UIElements/LoadingSpinner';
 import { AuthContext } from '../../shared/context/auth-context';
 
 const LeagueDetails = (props) => {
@@ -93,36 +95,50 @@ const LeagueDetails = (props) => {
 	};
 
 	if (!leagueDetails) {
-		return <p>no league details</p>;
+		return (
+			<React.Fragment>
+				<ErrorModal error={error} onClear={clearError} />
+				<div>
+					{isLoading && <LoadingSpinner asOverlay />}
+					<p>no league details</p>
+				</div>
+			</React.Fragment>
+		);
 	} else {
 		return (
-			<div>
-				<h3>League Name</h3>
-				<p>{leagueDetails.name}</p>
-				<h3>Participants</h3>
-				{
-					<ul id='league-details'>
-						{leagueDetails.players.map((player) => (
-							<li>{player.player.name}</li>
-						))}
-					</ul>
-				}
-				{!alreadyJoined ? (
-					<Button onClick={addParticipantHandler} type='submit'>
-						JOIN LEAGUE
-					</Button>
-				) : (
-					<p>Already Joined</p>
-				)}
-				{alreadyJoined && (
-					<Button
-						onClick={removeSelfAsParticipantHandler}
-						type='submit'
-					>
-						LEAVE LEAGUE
-					</Button>
-				)}
-			</div>
+			<React.Fragment>
+				<ErrorModal error={error} onClear={clearError} />
+				<div>
+					{isLoading && <LoadingSpinner asOverlay />}
+					<h3>League Name</h3>
+					<p>{leagueDetails.name}</p>
+					<h3>Participants</h3>
+					{
+						<ul id='league-details'>
+							{leagueDetails.players.map((player) => (
+								<li>
+									{player.player.name} - {player.role}
+								</li>
+							))}
+						</ul>
+					}
+					{!alreadyJoined ? (
+						<Button onClick={addParticipantHandler} type='submit'>
+							JOIN LEAGUE
+						</Button>
+					) : (
+						<p>Already Joined</p>
+					)}
+					{alreadyJoined && (
+						<Button
+							onClick={removeSelfAsParticipantHandler}
+							type='submit'
+						>
+							LEAVE LEAGUE
+						</Button>
+					)}
+				</div>
+			</React.Fragment>
 		);
 	}
 };

@@ -88,7 +88,7 @@ const CreateLeague = (props) => {
 					onInput={inputHandler}
 				/>
 				<Button type='submit' disabled={!formState.isValid}>
-					ADD LEAGUE
+					CREATE LEAGUE
 				</Button>
 			</form>
 		</React.Fragment>
