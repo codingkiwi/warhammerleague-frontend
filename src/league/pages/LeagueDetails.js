@@ -108,6 +108,7 @@ const LeagueDetails = (props) => {
 		return (
 			<React.Fragment>
 				<ErrorModal error={error} onClear={clearError} />
+				<img src={auth.userImage}/>
 				<div>
 					{isLoading && <LoadingSpinner asOverlay />}
 					<h3>League Name</h3>

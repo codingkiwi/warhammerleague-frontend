@@ -6,10 +6,12 @@ export const useAuth = () => {
 	const [token, setToken] = useState(null);
 	const [tokenExpirationDate, setTokenExpirationDate] = useState();
 	const [userId, setUserId] = useState(false);
+	const [image, setImage] = useState(null);
 
-	const login = useCallback((uid, token, expirationDate) => {
+	const login = useCallback((uid, token, image, expirationDate) => {
 		setToken(token);
 		setUserId(uid);
+		setImage(image);
 		const tokenExpirationDate =
 			expirationDate || new Date(new Date().getTime() + 1000 * 60 * 60);
 		setTokenExpirationDate(tokenExpirationDate);
@@ -18,6 +20,7 @@ export const useAuth = () => {
 			JSON.stringify({
 				userId: uid,
 				token: token,
+				image: image,
 				expiration: tokenExpirationDate.toISOString(),
 			})
 		);
@@ -27,6 +30,7 @@ export const useAuth = () => {
 		setToken(null);
 		setTokenExpirationDate(null);
 		setUserId(null);
+		setImage(null);
 		localStorage.removeItem('userData');
 	}, []);
 
@@ -37,22 +41,24 @@ export const useAuth = () => {
 		} else {
 			clearTimeout(logoutTimer);
 		}
-	}, [token, logout, tokenExpirationDate]);
+	}, [token, logout, tokenExpirationDate, image]);
 
 	useEffect(() => {
 		const storageData = JSON.parse(localStorage.getItem('userData'));
 		if (
 			storageData &&
 			storageData.token &&
+			storageData.image &&
 			new Date(storageData.expiration) > new Date()
 		) {
 			login(
 				storageData.userId,
 				storageData.token,
+				storageData.image,
 				new Date(storageData.expiration)
 			);
 		}
-	}, [login]);
+	}, [login, image]);
 
-	return { userId, token, login, logout };
+	return { userId, token, image, login, logout };
 };

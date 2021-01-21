@@ -22,8 +22,11 @@ const NavLinks = (props) => {
 					<li>
 						<NavLink to='/leagues/explore'>EXPLORE</NavLink>
 					</li>
-                    <li>
+					<li>
 						<NavLink to='/leagues/'>MY LEAGUES</NavLink>
+					</li>
+					<li id='user-image'>
+						<img alt='user profile' src={auth.userImage}></img>
 					</li>
 				</React.Fragment>
 			)}
