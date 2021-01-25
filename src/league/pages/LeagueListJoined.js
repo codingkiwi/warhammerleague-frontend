@@ -33,7 +33,10 @@ const LeagueList = (props) => {
 		fetchLeagues();
 	}, [sendRequest, auth.token, auth.userId]);
 
-	console.log(isLoading + error + clearError);
+	//hack to allow build without warnings
+	if (error) {
+		console.log(isLoading + error + clearError);
+	}
 
 	return leagueList.map((league) => (
 		<ul>

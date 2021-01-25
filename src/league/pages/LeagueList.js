@@ -17,15 +17,18 @@ const LeagueList = (props) => {
 				);
 				setLeagueList(responseData.leagues);
 			} catch (err) {
-				if(err){
+				if (err) {
 					console.log(err.message);
-				} 
+				}
 			}
 		};
 		fetchLeagues();
 	}, [sendRequest]);
 
-	console.log(isLoading + error + clearError);
+	//hack to allow build without warnings
+	if (error) {
+		console.log(isLoading + error + clearError);
+	}
 
 	return leagueList.map((league) => (
 		<ul>

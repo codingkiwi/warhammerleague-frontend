@@ -45,7 +45,9 @@ const LeagueDetails = (props) => {
 		fetchLeagues();
 	}, [sendRequest, leagueId, auth.token, participantsChanged, auth.userId]);
 
-	console.log(isLoading + error + clearError); //hack to remove warnings so netlify can build
+	if(error){
+		console.log(isLoading + error + clearError); //hack to remove warnings so netlify can build
+	}
 
 	const addParticipantHandler = async () => {
 		setParticipantsChanged(true);
@@ -108,7 +110,6 @@ const LeagueDetails = (props) => {
 		return (
 			<React.Fragment>
 				<ErrorModal error={error} onClear={clearError} />
-				<img src={auth.userImage}/>
 				<div>
 					{isLoading && <LoadingSpinner asOverlay />}
 					<h3>League Name</h3>
@@ -117,7 +118,7 @@ const LeagueDetails = (props) => {
 					{
 						<ul id='league-details'>
 							{leagueDetails.players.map((player) => (
-								<li>
+								<li key={player.player.id}>
 									{player.player.name} - {player.role}
 								</li>
 							))}
