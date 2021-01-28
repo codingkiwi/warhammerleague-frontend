@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useContext } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 
 import Button from '../../shared/components/FormElements/Button';
 import { useHttpClient } from '../../shared/hooks/http-hook';
@@ -45,7 +45,7 @@ const LeagueDetails = (props) => {
 		fetchLeagues();
 	}, [sendRequest, leagueId, auth.token, participantsChanged, auth.userId]);
 
-	if(error){
+	if (error) {
 		console.log(isLoading + error + clearError); //hack to remove warnings so netlify can build
 	}
 
@@ -96,6 +96,8 @@ const LeagueDetails = (props) => {
 		setAlreadyJoined(false);
 	};
 
+	const submitGameHandler = () => {};
+
 	if (!leagueDetails) {
 		return (
 			<React.Fragment>
@@ -132,12 +134,21 @@ const LeagueDetails = (props) => {
 						<p>Already Joined</p>
 					)}
 					{alreadyJoined && (
-						<Button
-							onClick={removeSelfAsParticipantHandler}
-							type='submit'
-						>
-							LEAVE LEAGUE
-						</Button>
+						<React.Fragment>
+							<Button
+								onClick={removeSelfAsParticipantHandler}
+								type='submit'
+							>
+								LEAVE LEAGUE
+							</Button>
+							<Link
+								to={{
+									pathname: '/leagues/' + leagueId + '/submitgame',
+								}}
+							>
+								SUBMIT GAME
+							</Link>
+						</React.Fragment>
 					)}
 				</div>
 			</React.Fragment>

@@ -11,6 +11,7 @@ import CreateLeague from './league/pages/CreateLeague';
 import LeagueList from './league/pages/LeagueList';
 import LeagueListJoined from './league/pages/LeagueListJoined';
 import LeagueDetails from './league/pages/LeagueDetails';
+import LeagueSubmitGame from './league/pages/LeagueSubmitGame';
 import MainNavigation from './shared/components/Navigation/MainNavigation';
 import { AuthContext } from './shared/context/auth-context';
 import { useAuth } from './shared/hooks/auth-hook';
@@ -37,6 +38,9 @@ const App = () => {
 				</Route>
 				<Route path='/leagues/:leagueId' exact>
 					<LeagueDetails />
+				</Route>
+				<Route path='/leagues/:leagueId/submitgame' exact>
+					<LeagueSubmitGame />
 				</Route>
 				{/* <Redirect to='/' /> */}
 			</Switch>
