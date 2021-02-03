@@ -118,10 +118,20 @@ const LeagueDetails = (props) => {
 					<p>{leagueDetails.name}</p>
 					<h3>Participants</h3>
 					{
-						<ul id='league-details'>
+						<ul id='participant-details'>
 							{leagueDetails.players.map((player) => (
 								<li key={player.player.id}>
 									{player.player.name} - {player.role}
+								</li>
+							))}
+						</ul>
+					}
+					<h3>Games</h3>
+					{
+						<ul id='game-details'>
+							{leagueDetails.games.map((game) => (
+								<li key={game.id}>
+									{game.player1score.player} vs {game.player2score.player} 
 								</li>
 							))}
 						</ul>
@@ -143,7 +153,8 @@ const LeagueDetails = (props) => {
 							</Button>
 							<Link
 								to={{
-									pathname: '/leagues/' + leagueId + '/submitgame',
+									pathname:
+										'/leagues/' + leagueId + '/submitgame',
 								}}
 							>
 								SUBMIT GAME

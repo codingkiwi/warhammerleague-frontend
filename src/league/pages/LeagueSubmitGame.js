@@ -20,7 +20,7 @@ const LeagueSubmitGame = (props) => {
 	const { isLoading, error, sendRequest, clearError } = useHttpClient();
 
 	const leagueId = useParams().leagueId;
-	const [leagueDetails, setLeagueDetails] = useState();
+	//const [leagueDetails, setLeagueDetails] = useState();
 	const [leagueParticipants, setLeagueParticipants] = useState();
 	const [alreadyJoined, setAlreadyJoined] = useState(false);
 
@@ -38,7 +38,7 @@ const LeagueSubmitGame = (props) => {
 						Authorization: 'Bearer ' + auth.token,
 					}
 				);
-				setLeagueDetails(responseData.league);
+				//setLeagueDetails(responseData.league);
 				setLeagueParticipants(
 					responseData.league.players.map(
 						(player) => player.player.name
@@ -54,8 +54,6 @@ const LeagueSubmitGame = (props) => {
 		};
 		fetchLeagues();
 	}, [sendRequest, leagueId, auth.token, auth.userId]);
-
-	console.log(leagueParticipants);
 
 	const [formState, inputHandler] = useForm(
 		{
@@ -106,20 +104,25 @@ const LeagueSubmitGame = (props) => {
 
 		try {
 			await sendRequest(
-				process.env.REACT_APP_BACKEND_URL + '/leagues/',
+				process.env.REACT_APP_BACKEND_URL + '/leagues/' + leagueId + '/submitgame',
 				'POST',
 				JSON.stringify({
-					player1: formState.inputs.name.value,
-					player: formState.inputs.description.value,
-					location: formState.inputs.location.value,
-					participantId: auth.userId,
+					player1: formState.inputs.player1.value,
+					player1PrimaryPoints:formState.inputs.player1PrimaryPoints.value,
+					player1SecondaryPoints:formState.inputs.player1SecondaryPoints.value,
+					player1Faction:formState.inputs.player1Faction.value,
+					player2:formState.inputs.player2.value,
+					player2PrimaryPoints:formState.inputs.player2PrimaryPoints.value,
+					player2SecondaryPoints:formState.inputs.player2SecondaryPoints.value,
+					player2Faction:formState.inputs.player2Faction.value,
+					playerFirstTurn:formState.inputs.playerFirstTurn.value,
 				}),
 				{
 					'Content-Type': 'application/json',
 					Authorization: 'Bearer ' + auth.token,
 				}
 			);
-			history.push('/');
+			history.push('/leagues/' + leagueId);
 		} catch (err) {}
 	};
 
