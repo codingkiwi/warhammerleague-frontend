@@ -104,18 +104,25 @@ const LeagueSubmitGame = (props) => {
 
 		try {
 			await sendRequest(
-				process.env.REACT_APP_BACKEND_URL + '/leagues/' + leagueId + '/submitgame',
+				process.env.REACT_APP_BACKEND_URL +
+					'/leagues/' +
+					leagueId +
+					'/submitgame',
 				'POST',
 				JSON.stringify({
 					player1: formState.inputs.player1.value,
-					player1PrimaryPoints:formState.inputs.player1PrimaryPoints.value,
-					player1SecondaryPoints:formState.inputs.player1SecondaryPoints.value,
-					player1Faction:formState.inputs.player1Faction.value,
-					player2:formState.inputs.player2.value,
-					player2PrimaryPoints:formState.inputs.player2PrimaryPoints.value,
-					player2SecondaryPoints:formState.inputs.player2SecondaryPoints.value,
-					player2Faction:formState.inputs.player2Faction.value,
-					playerFirstTurn:formState.inputs.playerFirstTurn.value,
+					player1PrimaryPoints:
+						formState.inputs.player1PrimaryPoints.value,
+					player1SecondaryPoints:
+						formState.inputs.player1SecondaryPoints.value,
+					player1Faction: formState.inputs.player1Faction.value,
+					player2: formState.inputs.player2.value,
+					player2PrimaryPoints:
+						formState.inputs.player2PrimaryPoints.value,
+					player2SecondaryPoints:
+						formState.inputs.player2SecondaryPoints.value,
+					player2Faction: formState.inputs.player2Faction.value,
+					playerFirstTurn: formState.inputs.playerFirstTurn.value,
 				}),
 				{
 					'Content-Type': 'application/json',
@@ -126,178 +133,182 @@ const LeagueSubmitGame = (props) => {
 		} catch (err) {}
 	};
 
-	return (
-		<React.Fragment>
-			<ErrorModal error={error} onClear={clearError} />
-			<form onSubmit={submitGameHandler}>
-				{isLoading && <LoadingSpinner asOverlay />}
-				<Input
-					id='player1'
-					label='player 1'
-					element='select'
-					options={leagueParticipants}
-					validators={[VALIDATOR_REQUIRE()]}
-					errorText='please enter player 1'
-					onInput={inputHandler}
-				/>
-				<Input
-					id='player1PrimaryPoints'
-					label='player 1s primary points'
-					element='input'
-					type='number'
-					validators={[VALIDATOR_REQUIRE(), VALIDATOR_NUMBER()]}
-					errorText='please enter a number for player 1s primary points'
-					onInput={inputHandler}
-				/>
-				<Input
-					id='player1SecondaryPoints'
-					label='player 1s secondary points'
-					element='input'
-					type='number'
-					validators={[VALIDATOR_REQUIRE(), VALIDATOR_NUMBER()]}
-					errorText='please enter a number for player 1s secondary points'
-					onInput={inputHandler}
-				/>
-				<Input
-					id='player1Faction'
-					label='player 1s faction'
-					element='select'
-					options={[
-						'Aeldari',
-						'Asuryani',
-						'Drukhari',
-						'Harlequins',
-						'Ynnari',
-						'Aeldari',
-						'Chaos',
-						'Chaos Knights',
-						'Daemons',
-						'Death Guard',
-						'Fallen',
-						'Gellerpox Infected',
-						'Heretic Astarties',
-						'Servants of the Abyss',
-						'Thousand Sons',
-						'Titanicus Traitoris',
-						'Chaos',
-						'Imperium',
-						'Adepta Sororitas',
-						'Adeptus Astarties',
-						'Adeptus Custodies',
-						'Adeptus Mechanicus',
-						'Adeptus Titanicus',
-						'Astra Militarum',
-						'Elucidian Starstriders',
-						'Fallen',
-						'Grey Knights',
-						'Imperial Knights',
-						'Inquisition',
-						'Officio Assassinorum',
-						'Sisters of Silence',
-						'Imperium',
-						'Necrons',
-						'Orks',
-						"T'au Empire",
-						'Tyranids',
-						'Brood Brothers',
-						'Genestealer Cults',
-						'Tyranids',
-					]}
-					validators={[VALIDATOR_REQUIRE()]}
-					errorText='please enter player 1s faction'
-					onInput={inputHandler}
-				/>
-				<Input
-					id='player2'
-					label='player 2'
-					element='select'
-					options={leagueParticipants}
-					validators={[VALIDATOR_REQUIRE()]}
-					errorText='please enter player 2'
-					onInput={inputHandler}
-				/>
-				<Input
-					id='player2PrimaryPoints'
-					label='player 2s primary points'
-					element='input'
-					type='number'
-					validators={[VALIDATOR_REQUIRE(), VALIDATOR_NUMBER()]}
-					errorText='please enter a number for player 2s primary points'
-					onInput={inputHandler}
-				/>
-				<Input
-					id='player2SecondaryPoints'
-					label='player 2s secondary points'
-					element='input'
-					type='number'
-					validators={[VALIDATOR_REQUIRE(), VALIDATOR_NUMBER()]}
-					errorText='please enter a number for player 2s secondary points'
-					onInput={inputHandler}
-				/>
-				<Input
-					id='player2Faction'
-					label='player 2s faction'
-					element='select'
-					options={[
-						'Aeldari',
-						'Asuryani',
-						'Drukhari',
-						'Harlequins',
-						'Ynnari',
-						'Aeldari',
-						'Chaos',
-						'Chaos Knights',
-						'Daemons',
-						'Death Guard',
-						'Fallen',
-						'Gellerpox Infected',
-						'Heretic Astarties',
-						'Servants of the Abyss',
-						'Thousand Sons',
-						'Titanicus Traitoris',
-						'Chaos',
-						'Imperium',
-						'Adepta Sororitas',
-						'Adeptus Astarties',
-						'Adeptus Custodies',
-						'Adeptus Mechanicus',
-						'Adeptus Titanicus',
-						'Astra Militarum',
-						'Elucidian Starstriders',
-						'Fallen',
-						'Grey Knights',
-						'Imperial Knights',
-						'Inquisition',
-						'Officio Assassinorum',
-						'Sisters of Silence',
-						'Imperium',
-						'Necrons',
-						'Orks',
-						"T'au Empire",
-						'Tyranids',
-						'Brood Brothers',
-						'Genestealer Cults',
-						'Tyranids',
-					]}
-					validators={[VALIDATOR_REQUIRE()]}
-					errorText='please enter player 2s faction'
-					onInput={inputHandler}
-				/>
-				<Input
-					id='playerFirstTurn'
-					label='which player went first?'
-					element='select'
-					options={['Player 1', 'Player 2']}
-					validators={[VALIDATOR_REQUIRE()]}
-					errorText='please enter which player went first'
-					onInput={inputHandler}
-				/>
-				<Button type='submit' disabled={!formState.isValid}>
-					CREATE LEAGUE
-				</Button>
-			</form>
-		</React.Fragment>
-	);
+	if (alreadyJoined) {
+		return (
+			<React.Fragment>
+				<ErrorModal error={error} onClear={clearError} />
+				<form onSubmit={submitGameHandler}>
+					{isLoading && <LoadingSpinner asOverlay />}
+					<Input
+						id='player1'
+						label='player 1'
+						element='select'
+						options={leagueParticipants}
+						validators={[VALIDATOR_REQUIRE()]}
+						errorText='please enter player 1'
+						onInput={inputHandler}
+					/>
+					<Input
+						id='player1PrimaryPoints'
+						label='player 1s primary points'
+						element='input'
+						type='number'
+						validators={[VALIDATOR_REQUIRE(), VALIDATOR_NUMBER()]}
+						errorText='please enter a number for player 1s primary points'
+						onInput={inputHandler}
+					/>
+					<Input
+						id='player1SecondaryPoints'
+						label='player 1s secondary points'
+						element='input'
+						type='number'
+						validators={[VALIDATOR_REQUIRE(), VALIDATOR_NUMBER()]}
+						errorText='please enter a number for player 1s secondary points'
+						onInput={inputHandler}
+					/>
+					<Input
+						id='player1Faction'
+						label='player 1s faction'
+						element='select'
+						options={[
+							'Aeldari',
+							'Asuryani',
+							'Drukhari',
+							'Harlequins',
+							'Ynnari',
+							'Aeldari',
+							'Chaos',
+							'Chaos Knights',
+							'Daemons',
+							'Death Guard',
+							'Fallen',
+							'Gellerpox Infected',
+							'Heretic Astarties',
+							'Servants of the Abyss',
+							'Thousand Sons',
+							'Titanicus Traitoris',
+							'Chaos',
+							'Imperium',
+							'Adepta Sororitas',
+							'Adeptus Astarties',
+							'Adeptus Custodies',
+							'Adeptus Mechanicus',
+							'Adeptus Titanicus',
+							'Astra Militarum',
+							'Elucidian Starstriders',
+							'Fallen',
+							'Grey Knights',
+							'Imperial Knights',
+							'Inquisition',
+							'Officio Assassinorum',
+							'Sisters of Silence',
+							'Imperium',
+							'Necrons',
+							'Orks',
+							"T'au Empire",
+							'Tyranids',
+							'Brood Brothers',
+							'Genestealer Cults',
+							'Tyranids',
+						]}
+						validators={[VALIDATOR_REQUIRE()]}
+						errorText='please enter player 1s faction'
+						onInput={inputHandler}
+					/>
+					<Input
+						id='player2'
+						label='player 2'
+						element='select'
+						options={leagueParticipants}
+						validators={[VALIDATOR_REQUIRE()]}
+						errorText='please enter player 2'
+						onInput={inputHandler}
+					/>
+					<Input
+						id='player2PrimaryPoints'
+						label='player 2s primary points'
+						element='input'
+						type='number'
+						validators={[VALIDATOR_REQUIRE(), VALIDATOR_NUMBER()]}
+						errorText='please enter a number for player 2s primary points'
+						onInput={inputHandler}
+					/>
+					<Input
+						id='player2SecondaryPoints'
+						label='player 2s secondary points'
+						element='input'
+						type='number'
+						validators={[VALIDATOR_REQUIRE(), VALIDATOR_NUMBER()]}
+						errorText='please enter a number for player 2s secondary points'
+						onInput={inputHandler}
+					/>
+					<Input
+						id='player2Faction'
+						label='player 2s faction'
+						element='select'
+						options={[
+							'Aeldari',
+							'Asuryani',
+							'Drukhari',
+							'Harlequins',
+							'Ynnari',
+							'Aeldari',
+							'Chaos',
+							'Chaos Knights',
+							'Daemons',
+							'Death Guard',
+							'Fallen',
+							'Gellerpox Infected',
+							'Heretic Astarties',
+							'Servants of the Abyss',
+							'Thousand Sons',
+							'Titanicus Traitoris',
+							'Chaos',
+							'Imperium',
+							'Adepta Sororitas',
+							'Adeptus Astarties',
+							'Adeptus Custodies',
+							'Adeptus Mechanicus',
+							'Adeptus Titanicus',
+							'Astra Militarum',
+							'Elucidian Starstriders',
+							'Fallen',
+							'Grey Knights',
+							'Imperial Knights',
+							'Inquisition',
+							'Officio Assassinorum',
+							'Sisters of Silence',
+							'Imperium',
+							'Necrons',
+							'Orks',
+							"T'au Empire",
+							'Tyranids',
+							'Brood Brothers',
+							'Genestealer Cults',
+							'Tyranids',
+						]}
+						validators={[VALIDATOR_REQUIRE()]}
+						errorText='please enter player 2s faction'
+						onInput={inputHandler}
+					/>
+					<Input
+						id='playerFirstTurn'
+						label='which player went first?'
+						element='select'
+						options={['Player 1', 'Player 2']}
+						validators={[VALIDATOR_REQUIRE()]}
+						errorText='please enter which player went first'
+						onInput={inputHandler}
+					/>
+					<Button type='submit' disabled={!formState.isValid}>
+						CREATE LEAGUE
+					</Button>
+				</form>
+			</React.Fragment>
+		);
+	}else{
+		return(<p>Please join this league before submitting a game</p>)
+	}
 };
 
 export default LeagueSubmitGame;
