@@ -21,7 +21,8 @@ const LeagueSubmitGame = (props) => {
 
 	const leagueId = useParams().leagueId;
 	//const [leagueDetails, setLeagueDetails] = useState();
-	const [leagueParticipants, setLeagueParticipants] = useState();
+	// const [leagueParticipants, setLeagueParticipants] = useState();
+	const [leagueParticipantsWithId, setLeagueParticipantsWithId] = useState();
 	const [alreadyJoined, setAlreadyJoined] = useState(false);
 
 	useEffect(() => {
@@ -39,10 +40,17 @@ const LeagueSubmitGame = (props) => {
 					}
 				);
 				//setLeagueDetails(responseData.league);
-				setLeagueParticipants(
-					responseData.league.players.map(
-						(player) => player.player.name
-					)
+				// setLeagueParticipants(
+				// 	responseData.league.players.map(
+				// 		(player) => player.player.name
+				// 	)
+				// );
+
+				setLeagueParticipantsWithId(
+					responseData.league.players.map((player) => ({
+						name: player.player.name,
+						value: player.player.id,
+					}))
 				);
 
 				if (responseData.joined === 'true') {
@@ -143,7 +151,7 @@ const LeagueSubmitGame = (props) => {
 						id='player1'
 						label='player 1'
 						element='select'
-						options={leagueParticipants}
+						optionsWithId={leagueParticipantsWithId}
 						validators={[VALIDATOR_REQUIRE()]}
 						errorText='please enter player 1'
 						onInput={inputHandler}
@@ -219,7 +227,7 @@ const LeagueSubmitGame = (props) => {
 						id='player2'
 						label='player 2'
 						element='select'
-						options={leagueParticipants}
+						optionsWithId={leagueParticipantsWithId}
 						validators={[VALIDATOR_REQUIRE()]}
 						errorText='please enter player 2'
 						onInput={inputHandler}
@@ -306,8 +314,8 @@ const LeagueSubmitGame = (props) => {
 				</form>
 			</React.Fragment>
 		);
-	}else{
-		return(<p>Please join this league before submitting a game</p>)
+	} else {
+		return <p>Please join this league before submitting a game</p>;
 	}
 };
 

@@ -35,6 +35,13 @@ const LeagueDetails = (props) => {
 				);
 				setLeagueDetails(responseData.league);
 
+				console.log(responseData.league);
+
+				// leagueDetails.games.forEach((game) =>{
+				// 	console.log('player1: ' + JSON.stringify(game.player1score.player));
+				// 	console.log('player2: ' + JSON.stringify(game.player2score.player));
+				// })
+
 				if (responseData.joined === 'true') {
 					setAlreadyJoined(true);
 				}
@@ -96,8 +103,6 @@ const LeagueDetails = (props) => {
 		setAlreadyJoined(false);
 	};
 
-	const submitGameHandler = () => {};
-
 	if (!leagueDetails) {
 		return (
 			<React.Fragment>
@@ -131,7 +136,7 @@ const LeagueDetails = (props) => {
 						<ul id='game-details'>
 							{leagueDetails.games.map((game) => (
 								<li key={game.id}>
-									{game.player1score.player} vs {game.player2score.player} 
+									{game.player1score.player.name} vs {game.player2score.player.name} 
 								</li>
 							))}
 						</ul>

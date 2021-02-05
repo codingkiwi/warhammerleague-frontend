@@ -59,7 +59,7 @@ const Input = (props) => {
 				value={inputState.value}
 			/>
 		);
-	} else if (props.element === 'select' && props.options != null) {
+	} else if (props.element === 'select' && props.options) {
 		element = (
 			<select
 				id={props.id}
@@ -72,6 +72,22 @@ const Input = (props) => {
 				</option>
 				{props.options.map((option) => (
 					<option value={option}>{option}</option>
+				))}
+			</select>
+		);
+	} else if (props.element === 'select' && props.optionsWithId) {
+		element = (
+			<select
+				id={props.id}
+				onChange={changeHandler}
+				onBlur={touchHandler}
+				value={inputState.value}
+			>
+				<option disabled value=''>
+					--Please choose an option--
+				</option>
+				{props.optionsWithId.map((option) => (
+					<option value={option.value}>{option.name}</option>
 				))}
 			</select>
 		);
