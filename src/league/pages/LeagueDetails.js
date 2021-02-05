@@ -35,13 +35,6 @@ const LeagueDetails = (props) => {
 				);
 				setLeagueDetails(responseData.league);
 
-				console.log(responseData.league);
-
-				// leagueDetails.games.forEach((game) =>{
-				// 	console.log('player1: ' + JSON.stringify(game.player1score.player));
-				// 	console.log('player2: ' + JSON.stringify(game.player2score.player));
-				// })
-
 				if (responseData.joined === 'true') {
 					setAlreadyJoined(true);
 				}
