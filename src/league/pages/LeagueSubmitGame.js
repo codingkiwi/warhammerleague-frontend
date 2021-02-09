@@ -309,7 +309,7 @@ const LeagueSubmitGame = (props) => {
 						onInput={inputHandler}
 					/>
 					<Button type='submit' disabled={!formState.isValid}>
-						CREATE LEAGUE
+						SUBMIT GAME
 					</Button>
 				</form>
 			</React.Fragment>
