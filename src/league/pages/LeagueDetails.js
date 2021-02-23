@@ -15,6 +15,7 @@ const LeagueDetails = (props) => {
 
 	const leagueId = useParams().leagueId;
 	const [leagueDetails, setLeagueDetails] = useState();
+	const [sortedPlayerList, setSortedPlayerList] = useState([]);
 	const [participantsChanged, setParticipantsChanged] = useState(false);
 	const [alreadyJoined, setAlreadyJoined] = useState(false);
 
@@ -34,6 +35,12 @@ const LeagueDetails = (props) => {
 					}
 				);
 				setLeagueDetails(responseData.league);
+
+				const sortedPlayers = responseData.league.players.sort((a, b) =>
+					a.score > b.score ? 1 : -1
+				);
+
+				setSortedPlayerList(sortedPlayers);
 
 				if (responseData.joined === 'true') {
 					setAlreadyJoined(true);
@@ -107,9 +114,6 @@ const LeagueDetails = (props) => {
 			</React.Fragment>
 		);
 	} else {
-		const sortedPlayerList = leagueDetails.players.sort((a, b) =>
-			a.score > b.score ? 1 : -1
-		);
 		return (
 			<React.Fragment>
 				<ErrorModal error={error} onClear={clearError} />

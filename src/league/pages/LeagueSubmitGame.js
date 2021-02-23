@@ -8,7 +8,7 @@ import {
 	VALIDATOR_REQUIRE,
 	VALIDATOR_NUMBER,
 	VALIDATOR_MIN,
-	VALIDATOR_MAX
+	VALIDATOR_MAX,
 } from '../../shared/util/validators';
 import Button from '../../shared/components/FormElements/Button';
 import { useForm } from '../../shared/hooks/form-hook';
@@ -140,6 +140,7 @@ const LeagueSubmitGame = (props) => {
 				}
 			);
 			history.push('/leagues/' + leagueId);
+			window.location.reload(true);
 		} catch (err) {}
 	};
 
@@ -163,7 +164,12 @@ const LeagueSubmitGame = (props) => {
 						label='player 1s primary points'
 						element='input'
 						type='number'
-						validators={[VALIDATOR_REQUIRE(), VALIDATOR_NUMBER(), VALIDATOR_MIN(0), VALIDATOR_MAX(45)]}
+						validators={[
+							VALIDATOR_REQUIRE(),
+							VALIDATOR_NUMBER(),
+							VALIDATOR_MIN(0),
+							VALIDATOR_MAX(45),
+						]}
 						errorText='please enter a score between 1 and 45 for player 1s primary points'
 						onInput={inputHandler}
 					/>
@@ -172,7 +178,12 @@ const LeagueSubmitGame = (props) => {
 						label='player 1s secondary points'
 						element='input'
 						type='number'
-						validators={[VALIDATOR_REQUIRE(), VALIDATOR_NUMBER(), VALIDATOR_MIN(0), VALIDATOR_MAX(45)]}
+						validators={[
+							VALIDATOR_REQUIRE(),
+							VALIDATOR_NUMBER(),
+							VALIDATOR_MIN(0),
+							VALIDATOR_MAX(45),
+						]}
 						errorText='please enter a score between 1 and 45 for player 1s secondary points'
 						onInput={inputHandler}
 					/>
@@ -239,7 +250,12 @@ const LeagueSubmitGame = (props) => {
 						label='player 2s primary points'
 						element='input'
 						type='number'
-						validators={[VALIDATOR_REQUIRE(), VALIDATOR_NUMBER(), VALIDATOR_MIN(0), VALIDATOR_MAX(45)]}
+						validators={[
+							VALIDATOR_REQUIRE(),
+							VALIDATOR_NUMBER(),
+							VALIDATOR_MIN(0),
+							VALIDATOR_MAX(45),
+						]}
 						errorText='please enter a  score between 1 and 45 for player 2s primary points'
 						onInput={inputHandler}
 					/>
@@ -248,7 +264,12 @@ const LeagueSubmitGame = (props) => {
 						label='player 2s secondary points'
 						element='input'
 						type='number'
-						validators={[VALIDATOR_REQUIRE(), VALIDATOR_NUMBER(), VALIDATOR_MIN(0), VALIDATOR_MAX(45)]}
+						validators={[
+							VALIDATOR_REQUIRE(),
+							VALIDATOR_NUMBER(),
+							VALIDATOR_MIN(0),
+							VALIDATOR_MAX(45),
+						]}
 						errorText='please enter a score between 1 and 45 for player 2s secondary points'
 						onInput={inputHandler}
 					/>
