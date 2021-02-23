@@ -107,6 +107,9 @@ const LeagueDetails = (props) => {
 			</React.Fragment>
 		);
 	} else {
+		const sortedPlayerList = leagueDetails.players.sort((a, b) =>
+			a.score > b.score ? 1 : -1
+		);
 		return (
 			<React.Fragment>
 				<ErrorModal error={error} onClear={clearError} />
@@ -117,9 +120,10 @@ const LeagueDetails = (props) => {
 					<h3>Participants</h3>
 					{
 						<ul id='participant-details'>
-							{leagueDetails.players.map((player) => (
+							{sortedPlayerList.map((player) => (
 								<li key={player.player.id}>
-									{player.player.name} - {player.role}
+									{player.player.name} - {player.role}:{' '}
+									{player.score}
 								</li>
 							))}
 						</ul>
@@ -129,7 +133,8 @@ const LeagueDetails = (props) => {
 						<ul id='game-details'>
 							{leagueDetails.games.map((game) => (
 								<li key={game.id}>
-									{game.player1score.player.name} vs {game.player2score.player.name} 
+									{game.player1score.player.name} vs{' '}
+									{game.player2score.player.name}
 								</li>
 							))}
 						</ul>
