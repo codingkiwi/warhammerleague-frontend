@@ -140,7 +140,7 @@ const LeagueSubmitGame = (props) => {
 				}
 			);
 			history.push('/leagues/' + leagueId);
-			window.location.reload(true);
+			// window.location.reload(true);
 		} catch (err) {}
 	};
 
