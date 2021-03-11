@@ -17,13 +17,13 @@ const NavLinks = (props) => {
 			{auth.isLoggedIn && (
 				<React.Fragment>
 					<li>
-						<NavLink to='/leagues/create'>Create League</NavLink>
+						<NavLink to='/leagues/create'>Create Ladder</NavLink>
 					</li>
 					<li>
-						<NavLink to='/leagues/explore'>Explore</NavLink>
+						<NavLink to='/leagues/explore'>Discover</NavLink>
 					</li>
 					<li>
-						<NavLink to='/leagues/'>My Leagues</NavLink>
+						<NavLink to='/leagues/'>My Ladders</NavLink>
 					</li>
 					<li id='user-image'>
 						<img alt='user profile' src={auth.userImage}></img>

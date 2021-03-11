@@ -3,6 +3,7 @@ import { useHistory, useParams } from 'react-router-dom';
 
 import Input from '../../shared/components/FormElements/Input';
 import ErrorModal from '../../shared/components/UIElements/ErrorModal';
+import Card from '../../shared/components/UIElements/Card';
 import LoadingSpinner from '../../shared/components/UIElements/LoadingSpinner';
 import {
 	VALIDATOR_REQUIRE,
@@ -146,13 +147,15 @@ const LeagueSubmitGame = (props) => {
 
 	if (alreadyJoined) {
 		return (
-			<React.Fragment>
+			<Card className="submit-game-form">
 				<ErrorModal error={error} onClear={clearError} />
+				<h2>Submit game results</h2>
+				<hr/>
 				<form onSubmit={submitGameHandler}>
 					{isLoading && <LoadingSpinner asOverlay />}
 					<Input
 						id='player1'
-						label='player 1'
+						label='Player 1'
 						element='select'
 						optionsWithId={leagueParticipantsWithId}
 						validators={[VALIDATOR_REQUIRE()]}
@@ -161,7 +164,7 @@ const LeagueSubmitGame = (props) => {
 					/>
 					<Input
 						id='player1PrimaryPoints'
-						label='player 1s primary points'
+						label='Player 1s primary points'
 						element='input'
 						type='number'
 						validators={[
@@ -175,7 +178,7 @@ const LeagueSubmitGame = (props) => {
 					/>
 					<Input
 						id='player1SecondaryPoints'
-						label='player 1s secondary points'
+						label='Player 1s secondary points'
 						element='input'
 						type='number'
 						validators={[
@@ -189,7 +192,7 @@ const LeagueSubmitGame = (props) => {
 					/>
 					<Input
 						id='player1Faction'
-						label='player 1s faction'
+						label='Player 1s faction'
 						element='select'
 						options={[
 							'Aeldari',
@@ -236,9 +239,10 @@ const LeagueSubmitGame = (props) => {
 						errorText='please enter player 1s faction'
 						onInput={inputHandler}
 					/>
+					<hr/>
 					<Input
 						id='player2'
-						label='player 2'
+						label='Player 2'
 						element='select'
 						optionsWithId={leagueParticipantsWithId}
 						validators={[VALIDATOR_REQUIRE()]}
@@ -247,7 +251,7 @@ const LeagueSubmitGame = (props) => {
 					/>
 					<Input
 						id='player2PrimaryPoints'
-						label='player 2s primary points'
+						label='Player 2s primary points'
 						element='input'
 						type='number'
 						validators={[
@@ -261,7 +265,7 @@ const LeagueSubmitGame = (props) => {
 					/>
 					<Input
 						id='player2SecondaryPoints'
-						label='player 2s secondary points'
+						label='Player 2s secondary points'
 						element='input'
 						type='number'
 						validators={[
@@ -275,7 +279,7 @@ const LeagueSubmitGame = (props) => {
 					/>
 					<Input
 						id='player2Faction'
-						label='player 2s faction'
+						label='Player 2s faction'
 						element='select'
 						options={[
 							'Aeldari',
@@ -324,7 +328,7 @@ const LeagueSubmitGame = (props) => {
 					/>
 					<Input
 						id='playerFirstTurn'
-						label='which player went first?'
+						label='Which player went first?'
 						element='select'
 						options={['Player 1', 'Player 2']}
 						validators={[VALIDATOR_REQUIRE()]}
@@ -332,10 +336,10 @@ const LeagueSubmitGame = (props) => {
 						onInput={inputHandler}
 					/>
 					<Button type='submit' disabled={!formState.isValid}>
-						SUBMIT GAME
+						Submit game
 					</Button>
 				</form>
-			</React.Fragment>
+			</Card>
 		);
 	} else {
 		return <p>Please join this league before submitting a game</p>;

@@ -19,15 +19,15 @@
 
 .main-navigation__title {
 	color: var(--color-body-text);
-  font-family: 'Libre Baskerville', 'Times New Roman', Times, serif;
-  font-size: 20px;
+	font-family: 'Libre Baskerville', 'Times New Roman', Times, serif;
+	font-size: 18px;
 }
 
 .main-navigation__title a {
 	text-decoration: none;
-  color: var(--color-body-text);
-  font-family: 'Libre Baskerville', 'Times New Roman', Times, serif;
-  font-size: 20px;
+	color: var(--color-body-text);
+	font-family: 'Libre Baskerville', 'Times New Roman', Times, serif;
+	font-size: 18px;
 }
 
 .main-navigation__header-nav {

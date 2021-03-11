@@ -4,17 +4,21 @@
   
   .form-control label,
   .form-control input,
-  .form-control textarea {
+  .form-control textarea,
+  .form-control select {
     display: block;
   }
   
   .form-control label {
-    font-weight: bold;
+    font-weight: normal;
+    text-align: left;
     margin-bottom: 0.5rem;
+    margin-top: 2rem;
   }
   
   .form-control input,
-  .form-control textarea {
+  .form-control textarea,
+  .form-control select {
     width: 100%;
     font: inherit;
     border: 1px solid #ccc;
@@ -23,7 +27,8 @@
   }
   
   .form-control input:focus,
-  .form-control textarea:focus {
+  .form-control textarea:focus,
+  .form-control select:focus {
     outline: none;
     background: #ebebeb;
     border-color: #510077;
@@ -35,7 +40,8 @@
   }
   
   .form-control--invalid input,
-  .form-control--invalid textarea {
+  .form-control--invalid textarea,
+  .form-control--invalid select {
     border-color: red;
     background: #ffd1d1;
   }

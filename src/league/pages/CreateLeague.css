@@ -1,0 +1,21 @@
+.create-league-form__header {
+	color: white;
+	text-align: center;
+}
+
+.create-league-form {
+	width: 90%;
+	max-width: 25rem;
+	margin: 7rem auto;
+	text-align: center;
+}
+
+.create-league-form form {
+	margin-bottom: 1rem;
+}
+
+@media (min-width: 768px) {
+    .create-league-form {
+      margin-top: 10rem;
+    }
+  }

@@ -3,6 +3,7 @@ import { useHistory } from 'react-router-dom';
 
 import Input from '../../shared/components/FormElements/Input';
 import ErrorModal from '../../shared/components/UIElements/ErrorModal';
+import Card from '../../shared/components/UIElements/Card';
 import LoadingSpinner from '../../shared/components/UIElements/LoadingSpinner';
 import { VALIDATOR_REQUIRE } from '../../shared/util/validators';
 import Button from '../../shared/components/FormElements/Button';
@@ -59,13 +60,15 @@ const CreateLeague = (props) => {
 	};
 
 	return (
-		<React.Fragment>
+		<Card className='create-league-form'>
 			<ErrorModal error={error} onClear={clearError} />
+			<h2>Create a ranked ladder</h2>
+			<hr />
 			<form onSubmit={leagueSubmitHandler}>
 				{isLoading && <LoadingSpinner asOverlay />}
 				<Input
 					id='name'
-					label='name'
+					label='Name'
 					element='input'
 					validators={[VALIDATOR_REQUIRE()]}
 					errorText='Please enter a name.'
@@ -81,17 +84,17 @@ const CreateLeague = (props) => {
 				/>
 				<Input
 					id='location'
-					label='location'
+					label='Location'
 					element='input'
 					validators={[VALIDATOR_REQUIRE()]}
 					errorText='Please enter a valid location.'
 					onInput={inputHandler}
 				/>
 				<Button type='submit' disabled={!formState.isValid}>
-					CREATE LEAGUE
+					Create ladder
 				</Button>
 			</form>
-		</React.Fragment>
+		</Card>
 	);
 };
 

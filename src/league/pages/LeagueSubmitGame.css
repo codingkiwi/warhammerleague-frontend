@@ -1,0 +1,21 @@
+.submit-game-form__header {
+	color: white;
+	text-align: center;
+}
+
+.submit-game-form {
+	width: 90%;
+	max-width: 25rem;
+	margin: 7rem auto;
+	text-align: center;
+}
+
+.submit-game-form form {
+	margin-bottom: 1rem;
+}
+
+@media (min-width: 768px) {
+    .submit-game-form {
+      margin-top: 10rem;
+    }
+  }

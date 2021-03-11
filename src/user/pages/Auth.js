@@ -110,7 +110,7 @@ const Auth = () => {
 			<ErrorModal error={error} onClear={clearError} />
 			<Card className='authentication'>
 				{isLoading && <LoadingSpinner asOverlay />}
-				<h2>Login Required</h2>
+				<h2>Sign In</h2>
 				<hr />
 				<form onSubmit={authSubmitHandler}>
 					{!isLoginMode && (
@@ -136,7 +136,7 @@ const Auth = () => {
 						element='input'
 						id='email'
 						type='email'
-						label='E-Mail'
+						label='Email'
 						validators={[VALIDATOR_EMAIL()]}
 						errorText='Please enter a valid email address.'
 						onInput={inputHandler}
@@ -151,11 +151,11 @@ const Auth = () => {
 						onInput={inputHandler}
 					/>
 					<Button type='submit' disabled={!formState.isValid}>
-						{isLoginMode ? 'LOGIN' : 'SIGNUP'}
+						{isLoginMode ? 'Login' : 'Sign up'}
 					</Button>
 				</form>
 				<Button inverse onClick={switchModeHandler}>
-					SWITCH TO {isLoginMode ? 'SIGNUP' : 'LOGIN'}
+					Switch to {isLoginMode ? 'sign up' : 'login'}
 				</Button>
 			</Card>
 		</React.Fragment>

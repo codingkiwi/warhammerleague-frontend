@@ -19,7 +19,7 @@
 	color: var(--color-body-text);
 	text-decoration: none;
 	padding: 0.5rem;
-	font-size: 15px;
+	font-size: 13px;
 }
 
 .nav-links a:hover,
@@ -37,6 +37,7 @@
 	background: transparent;
 	padding: 0.5rem;
 	font: inherit;
+	font-size: 13px;
 }
 
 .nav-links img {
