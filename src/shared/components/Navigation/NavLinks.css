@@ -16,23 +16,24 @@
 
 .nav-links a {
 	border: 1px solid transparent;
-	color: #1d5886;
+	color: var(--color-body-text);
 	text-decoration: none;
 	padding: 0.5rem;
+	font-size: 15px;
 }
 
 .nav-links a:hover,
 .nav-links a:active,
 .nav-links a.active {
-	background: #7ca7c8;
+	background: var(--color-links);
 	border-color: #292929;
 	color: #292929;
 }
 
 .nav-links button {
 	cursor: pointer;
-	border: 1px solid #292929;
-	color: #292929;
+	border: 1px solid var(--color-body-text);
+	color:var(--color-body-text);
 	background: transparent;
 	padding: 0.5rem;
 	font: inherit;
@@ -64,7 +65,7 @@
 	}
 
 	.nav-links a {
-		color: #1d5886;
+		color: var(--color-body-text);
 		text-decoration: none;
 	}
 
@@ -75,14 +76,14 @@
 	}
 
 	.nav-links button {
-		border: 1px solid rgb(46, 46, 46);
-		color: rgb(46, 46, 46);
+		border: 1px solid var(--color-body-text);
+		color: var(--color-body-text);
 		background: transparent;
 	}
 
 	.nav-links button:hover,
 	.nav-links button:active {
-		background: #7ca7c8;
+		background: var(--color-links);
 		color: #292929;
 	}
 }

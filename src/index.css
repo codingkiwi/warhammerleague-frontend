@@ -1,42 +1,68 @@
-@import url('https://fonts.googleapis.com/css?family=Open+Sans:400,700&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Libre+Baskerville:wght@700&family=Noto+Sans:ital,wght@0,400;0,700;1,400&display=swap');
 
 * {
-  box-sizing: border-box;
+	box-sizing: border-box;
+}
+
+:root {
+	--color-navbar: #080a0d;
+	--color-body-text: #f2f2f2;
+	--color-background: #253134;
+	--color-section-dark: #465356;
+	--color-section-light: #c4c4c4;
+	--color-accent: #43657a;
+	--color-links: #8bd2ff;
+	--color-links-hover: #abdcfa;
+	--color-links-visited: #32b0ff;
+	--color-error-text: #e90101;
 }
 
 html {
-  font-family: 'Open Sans', sans-serif;
+	font-family: 'Noto Sans', sans-serif;
+	color: var(--color-body-text);
 }
 
 body {
-  margin: 0;
-  background: #ADADAD;
+	margin: 0;
+	background: var(--color-background);
+}
+
+a {
+	color: var(--color-links);
+}
+
+a:visited {
+	color: var(--color-links-visited);
+}
+
+a:hover {
+	color: var(--color-links-hover);
 }
 
 .slide-in-left-enter {
-  transform: translateX(-100%);
+	transform: translateX(-100%);
 }
 
 .slide-in-left-enter-active {
-  transform: translateX(0);
-  opacity: 1;
-  transition: all 200ms;
+	transform: translateX(0);
+	opacity: 1;
+	transition: all 200ms;
 }
 
 .slide-in-left-exit {
-  transform: translateX(0%);
-  opacity: 1;
+	transform: translateX(0%);
+	opacity: 1;
 }
 
 .slide-in-left-exit-active {
-  transform: translateX(-100%);
-  opacity: 0;
-  transition: all 200ms;
+	transform: translateX(-100%);
+	opacity: 0;
+	transition: all 200ms;
 }
 
 .center {
-  text-align: center;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+	text-align: center;
+	display: flex;
+	justify-content: center;
+	align-items: center;
 }

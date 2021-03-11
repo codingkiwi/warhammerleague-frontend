@@ -11,19 +11,19 @@ const NavLinks = (props) => {
 		<ul className='nav-links'>
 			<li>
 				<NavLink to='/' exact>
-					HOME
+					Home
 				</NavLink>
 			</li>
 			{auth.isLoggedIn && (
 				<React.Fragment>
 					<li>
-						<NavLink to='/leagues/create'>CREATE LEAGUE</NavLink>
+						<NavLink to='/leagues/create'>Create League</NavLink>
 					</li>
 					<li>
-						<NavLink to='/leagues/explore'>EXPLORE</NavLink>
+						<NavLink to='/leagues/explore'>Explore</NavLink>
 					</li>
 					<li>
-						<NavLink to='/leagues/'>MY LEAGUES</NavLink>
+						<NavLink to='/leagues/'>My Leagues</NavLink>
 					</li>
 					<li id='user-image'>
 						<img alt='user profile' src={auth.userImage}></img>
@@ -32,12 +32,12 @@ const NavLinks = (props) => {
 			)}
 			{!auth.isLoggedIn && (
 				<li>
-					<NavLink to='/auth'>AUTHENTICATE</NavLink>
+					<NavLink to='/auth'>Auth</NavLink>
 				</li>
 			)}
 			{auth.isLoggedIn && (
 				<li>
-					<button onClick={auth.logout}>LOGOUT</button>
+					<button onClick={auth.logout}>Logout</button>
 				</li>
 			)}
 		</ul>
