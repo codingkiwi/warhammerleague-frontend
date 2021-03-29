@@ -38,13 +38,37 @@ const LeagueList = (props) => {
 		console.log(isLoading + error + clearError);
 	}
 
-	return leagueList.map((league) => (
-		<ul>
-			<li>{league.name}</li>
-			<li>{league.description}</li>
-			<Link to={'/leagues/' + league.id}>Details</Link>
-		</ul>
-	));
+	return (
+		<React.Fragment>
+			<div class='main-container'>
+				<h1>My Ladders</h1>
+				<div class='table-container'>
+					<table>
+						<thead>
+							<tr>
+								<th>Ladder Name</th>
+								<th>Location</th>
+								<th>Player Count</th>
+							</tr>
+						</thead>
+						<tbody>
+							{leagueList.map((league) => (
+								<tr key={league.id}>
+									<td>
+										<Link to={'/leagues/' + league.id}>
+											{league.name}
+										</Link>
+									</td>
+									<td>{league.location}</td>
+									<td>{league.players.length}</td>
+								</tr>
+							))}
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</React.Fragment>
+	);
 };
 
 export default LeagueList;

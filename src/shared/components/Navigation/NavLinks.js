@@ -1,11 +1,14 @@
 import React, { useContext } from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useLocation } from 'react-router-dom';
 
 import { AuthContext } from '../../context/auth-context';
 import './NavLinks.css';
 
 const NavLinks = (props) => {
 	const auth = useContext(AuthContext);
+
+	//for correct "active" behaviour on NavLinks
+	const { pathname } = useLocation();
 
 	return (
 		<ul className='nav-links'>
@@ -17,13 +20,19 @@ const NavLinks = (props) => {
 			{auth.isLoggedIn && (
 				<React.Fragment>
 					<li>
-						<NavLink to='/leagues/create'>Create Ladder</NavLink>
+						<NavLink to='/leagues/create' exact>
+							Create Ladder
+						</NavLink>
 					</li>
 					<li>
-						<NavLink to='/leagues/explore'>Discover</NavLink>
+						<NavLink to='/leagues/explore' exact>
+							Discover
+						</NavLink>
 					</li>
 					<li>
-						<NavLink to='/leagues/'>My Ladders</NavLink>
+						<NavLink to='/leagues/' exact>
+							My Ladders
+						</NavLink>
 					</li>
 					<li id='user-image'>
 						<img alt='user profile' src={auth.userImage}></img>
@@ -32,7 +41,9 @@ const NavLinks = (props) => {
 			)}
 			{!auth.isLoggedIn && (
 				<li>
-					<NavLink to='/auth'>Auth</NavLink>
+					<NavLink to='/auth' exact>
+						Auth
+					</NavLink>
 				</li>
 			)}
 			{auth.isLoggedIn && (

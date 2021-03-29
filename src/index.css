@@ -9,6 +9,7 @@
 	--color-body-text: #f2f2f2;
 	--color-background: #253134;
 	--color-section-dark: #465356;
+	--color-section-medium: #717C83;
 	--color-section-light: #c4c4c4;
 	--color-accent: #43657a;
 	--color-links: #8bd2ff;
@@ -65,4 +66,30 @@ a:hover {
 	display: flex;
 	justify-content: center;
 	align-items: center;
+}
+
+.main-container {
+	margin: 10%;
+}
+
+.table-container {
+	display: grid;
+	justify-items: center;
+}
+
+table {
+	width: 100%;
+	text-align: left;
+	border-collapse: collapse;
+	background-color: var(--color-section-dark);
+}
+
+th, td {
+	border: 2px solid var(--color-background);
+	height: 50px;
+	padding: 10px;
+}
+
+th {
+	background-color: var(--color-section-medium);
 }

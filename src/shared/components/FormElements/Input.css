@@ -36,7 +36,12 @@
   
   .form-control--invalid label,
   .form-control--invalid p {
-    color: red;
+    color: rgb(247, 72, 72);
+  }
+
+  .form-control--invalid p {
+    text-align: left;
+    font-size: 12px;
   }
   
   .form-control--invalid input,

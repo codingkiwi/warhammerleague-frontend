@@ -117,32 +117,11 @@ const LeagueDetails = (props) => {
 		return (
 			<React.Fragment>
 				<ErrorModal error={error} onClear={clearError} />
-				<div>
+				<div className='main-container'>
 					{isLoading && <LoadingSpinner asOverlay />}
-					<h3>League Name</h3>
-					<p>{leagueDetails.name}</p>
-					<h3>Participants</h3>
-					{
-						<ul id='participant-details'>
-							{sortedPlayerList.map((player) => (
-								<li key={player.player.id}>
-									{player.player.name} - {player.role}:{' '}
-									{player.score}
-								</li>
-							))}
-						</ul>
-					}
-					<h3>Games</h3>
-					{
-						<ul id='game-details'>
-							{leagueDetails.games.map((game) => (
-								<li key={game.id}>
-									{game.player1score.player.name} vs{' '}
-									{game.player2score.player.name}
-								</li>
-							))}
-						</ul>
-					}
+					<h1>{leagueDetails.name}</h1>
+					<p>{leagueDetails.description}</p>
+					<p>Players: {leagueDetails.players.length}</p>
 					{!alreadyJoined ? (
 						<Button onClick={addParticipantHandler} type='submit'>
 							JOIN LEAGUE
@@ -168,6 +147,48 @@ const LeagueDetails = (props) => {
 							</Link>
 						</React.Fragment>
 					)}
+					<h2>Participants</h2>
+					<table>
+						<thead>
+							<tr>
+								<th>Name</th>
+								<th>Role</th>
+								<th>Rating</th>
+							</tr>
+						</thead>
+						<tbody>
+							{sortedPlayerList.map((player) => (
+								<tr key={player.player.id}>
+									<td>{player.player.name}</td>
+									<td>{player.role}</td>
+									<td>{player.score}</td>
+								</tr>
+							))}
+						</tbody>
+					</table>
+					<h3>Games</h3>
+					<table>
+						<thead>
+							<tr>
+								<th>Date Played</th>
+								<th>Player 1</th>
+								<th>Player 2</th>
+								<th>Winner</th>
+							</tr>
+						</thead>
+						<tbody>
+							{leagueDetails.games.map((game) => (
+								<tr key={game.id}>
+									<td>{game.datePlayed}</td>
+									<td>{game.player1score.player.name}</td>
+									<td>{game.player2score.player.name}</td>
+									<td>{game.winner.name}</td>
+								</tr>
+							))}
+						</tbody>
+					</table>
+
+
 				</div>
 			</React.Fragment>
 		);
