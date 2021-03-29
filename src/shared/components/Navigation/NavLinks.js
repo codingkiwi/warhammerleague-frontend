@@ -1,14 +1,11 @@
 import React, { useContext } from 'react';
-import { NavLink, useLocation } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 
 import { AuthContext } from '../../context/auth-context';
 import './NavLinks.css';
 
 const NavLinks = (props) => {
 	const auth = useContext(AuthContext);
-
-	//for correct "active" behaviour on NavLinks
-	const { pathname } = useLocation();
 
 	return (
 		<ul className='nav-links'>
