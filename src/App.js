@@ -42,7 +42,7 @@ const App = () => {
 				<Route path='/leagues/:leagueId/submitgame' exact>
 					<LeagueSubmitGame />
 				</Route>
-				{/* <Redirect to='/' /> */}
+				<Redirect to='/' />
 			</Switch>
 		);
 	} else {
@@ -54,7 +54,7 @@ const App = () => {
 				<Route path='/auth' exact>
 					<Auth />
 				</Route>
-				{/* <Redirect to='/auth' /> */}
+				<Redirect to='/auth' />
 			</Switch>
 		);
 	}
