@@ -19,15 +19,17 @@
 	color: var(--color-body-text);
 	text-decoration: none;
 	padding: 0.5rem;
-	font-size: 13px;
+	margin: 0.75em;
+	font-size: 14px;
 }
 
 .nav-links a:hover,
 .nav-links a:active,
 .nav-links a.active {
-	background: var(--color-links);
-	border-color: #292929;
-	color: #292929;
+	border-left: 0;
+	border-right: 0;
+	border-top: 0;
+	border-bottom: solid red 2px;
 }
 
 .nav-links button {
