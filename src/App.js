@@ -7,6 +7,7 @@ import {
 } from 'react-router-dom';
 
 import Auth from './user/pages/Auth';
+import Home from './home/pages/Home';
 import CreateLeague from './league/pages/CreateLeague';
 import LeagueList from './league/pages/LeagueList';
 import LeagueListJoined from './league/pages/LeagueListJoined';
@@ -49,7 +50,7 @@ const App = () => {
 		routes = (
 			<Switch>
 				<Route path='/' exact>
-					<p>Logged Out Home</p>
+					<Home />
 				</Route>
 				<Route path='/auth' exact>
 					<Auth />
