@@ -11,3 +11,9 @@
 .card .form-control:last-of-type {
   margin-bottom: 3rem;
 }
+
+.card h5 {
+  font-size: 22px;
+  margin-bottom: 0;
+  margin-top: 0;
+}
