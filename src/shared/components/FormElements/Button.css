@@ -1,4 +1,5 @@
-.button {
+.button,
+a.button {
 	font: inherit;
 	padding: 0.5rem 1.5rem;
 	/* border: 1px solid var(--color-body-text); */
@@ -11,55 +12,70 @@
 	text-decoration: none;
 	display: inline-block;
 	width: 200px;
-	font-size: 13px;
+	font-size: 14px;
+	text-align: center;
 }
 
-.button:focus {
+.button:focus,
+a.button:focus {
 	outline: none;
 }
 
 .button:hover,
-.button:active {
+.button:active,
+a.button:hover,
+a.button:active {
 	background: var(--color-links-hover);
 	border-color: vaR(--color-links-hover);
 	color: var(--color-background);
 }
 
-.button--inverse {
+.button--inverse,
+a.button--inverse {
 	background: var(--color-section-light);
 	color: var(--color-background);
 }
 
 .button--inverse:hover,
-.button--inverse:active {
+.button--inverse:active,
+a.button--inverse:hover,
+a.button--inverse:active {
 	color: var(--color-background);
 	background: var(--color-links-hover);
 }
 
-.button--danger {
+.button--danger,
+a.button--danger {
 	background: #830000;
 	border-color: #830000;
 }
 
 .button--danger:hover,
-.button--danger:active {
+.button--danger:active,
+a.button--danger:hover,
+a.button--danger:active {
 	background: #f34343;
 	border-color: #f34343;
 }
 
 .button:disabled,
 .button:hover:disabled,
-.button:active:disabled {
+.button:active:disabled,
+a.button:disabled,
+a.button:hover:disabled,
+a.button:active:disabled {
 	background: #ccc;
 	color: #979797;
 	border-color: #ccc;
 	cursor: not-allowed;
 }
 
-.button--small {
+.button--small,
+a.button--small {
 	font-size: 0.8rem;
 }
 
-.button--big {
+.button--big,
+a.button--big {
 	font-size: 1.5rem;
 }
