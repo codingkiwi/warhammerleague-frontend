@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useContext } from 'react';
-import { useParams, Link } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 
 import Button from '../../shared/components/FormElements/Button';
 import { useHttpClient } from '../../shared/hooks/http-hook';
@@ -103,6 +103,10 @@ const LeagueDetails = (props) => {
 		setAlreadyJoined(false);
 	};
 
+	const removeGameHandler = () => {
+		alert("game removed");
+	}
+
 	if (!leagueDetails) {
 		return (
 			<React.Fragment>
@@ -132,19 +136,20 @@ const LeagueDetails = (props) => {
 					{alreadyJoined && (
 						<React.Fragment>
 							<Button
-								onClick={removeSelfAsParticipantHandler}
-								type='submit'
-							>
-								LEAVE LEAGUE
-							</Button>
-							<Link
 								to={{
 									pathname:
 										'/leagues/' + leagueId + '/submitgame',
 								}}
 							>
 								SUBMIT GAME
-							</Link>
+							</Button>
+							<Button
+								onClick={removeSelfAsParticipantHandler}
+								type='submit'
+								danger='true'
+							>
+								LEAVE LEAGUE
+							</Button>
 						</React.Fragment>
 					)}
 					<h2>Participants</h2>
@@ -173,22 +178,20 @@ const LeagueDetails = (props) => {
 								<th>Date Played</th>
 								<th>Player 1</th>
 								<th>Player 2</th>
-								<th>Winner</th>
+								<th className="table-cancel-row"><i className="fas fa-minus-circle"></i></th>
 							</tr>
 						</thead>
 						<tbody>
 							{leagueDetails.games.map((game) => (
 								<tr key={game.id}>
 									<td>{game.datePlayed}</td>
-									<td>{game.player1score.player.name}</td>
-									<td>{game.player2score.player.name}</td>
-									<td>{game.winner.name}</td>
+									<td>{game.player1score.player.name}{game.winner.id === game.player1score.player.id && <i className="fas fa-trophy winner-trophy"></i>}</td>
+									<td>{game.player2score.player.name}{game.winner.id === game.player2score.player.id && <i className="fas fa-trophy winner-trophy"></i>}</td>
+									<td className="table-cancel-row"><i className="fas fa-minus-circle remove-icon" onClick={removeGameHandler}></i></td>
 								</tr>
 							))}
 						</tbody>
 					</table>
-
-
 				</div>
 			</React.Fragment>
 		);

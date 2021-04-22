@@ -1,0 +1,15 @@
+.winner-trophy {
+	color: goldenrod;
+	display: inline;
+	margin-right: 10px;
+	margin-left: 5px;
+	float: right;
+}
+
+.table-cancel-row {
+    text-align: center;
+}
+
+.remove-icon {
+    color: #ff8080;
+}
