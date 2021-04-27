@@ -104,8 +104,8 @@ const LeagueDetails = (props) => {
 	};
 
 	const removeGameHandler = () => {
-		alert("game removed");
-	}
+		alert('game removed');
+	};
 
 	if (!leagueDetails) {
 		return (
@@ -122,76 +122,110 @@ const LeagueDetails = (props) => {
 			<React.Fragment>
 				<ErrorModal error={error} onClear={clearError} />
 				<div className='main-container'>
-					{isLoading && <LoadingSpinner asOverlay />}
-					<h1>{leagueDetails.name}</h1>
-					<p>{leagueDetails.description}</p>
-					<p>Players: {leagueDetails.players.length}</p>
-					{!alreadyJoined ? (
-						<Button onClick={addParticipantHandler} type='submit'>
-							JOIN LEAGUE
-						</Button>
-					) : (
-						<p>Already Joined</p>
-					)}
-					{alreadyJoined && (
-						<React.Fragment>
+					<div className='league-details-header'>
+						{isLoading && <LoadingSpinner asOverlay />}
+						<h1 id='league-title'>{leagueDetails.name}</h1>
+						<p>
+							<em>{leagueDetails.description}</em>
+						</p>
+						<p>Players: {leagueDetails.players.length}</p>
+						{!alreadyJoined ? (
 							<Button
-								to={{
-									pathname:
-										'/leagues/' + leagueId + '/submitgame',
-								}}
-							>
-								SUBMIT GAME
-							</Button>
-							<Button
-								onClick={removeSelfAsParticipantHandler}
+								onClick={addParticipantHandler}
 								type='submit'
-								danger='true'
 							>
-								LEAVE LEAGUE
+								JOIN LEAGUE
 							</Button>
-						</React.Fragment>
-					)}
-					<h2>Participants</h2>
-					<table>
-						<thead>
-							<tr>
-								<th>Name</th>
-								<th>Role</th>
-								<th>Rating</th>
-							</tr>
-						</thead>
-						<tbody>
-							{sortedPlayerList.map((player) => (
-								<tr key={player.player.id}>
-									<td>{player.player.name}</td>
-									<td>{player.role}</td>
-									<td>{player.score}</td>
+						) : (
+							<p>
+								<em>Already Joined</em>
+							</p>
+						)}
+						{alreadyJoined && (
+							<React.Fragment>
+								<Button
+									to={{
+										pathname:
+											'/leagues/' +
+											leagueId +
+											'/submitgame',
+									}}
+								>
+									SUBMIT GAME
+								</Button>
+								<Button
+									onClick={removeSelfAsParticipantHandler}
+									type='submit'
+									danger='true'
+								>
+									LEAVE LEAGUE
+								</Button>
+							</React.Fragment>
+						)}
+					</div>
+					<section className='league-details-section'>
+						<h2>Participants</h2>
+						<table>
+							<thead>
+								<tr>
+									<th>Name</th>
+									<th>Role</th>
+									<th>Rating</th>
 								</tr>
-							))}
-						</tbody>
-					</table>
-					<h3>Games</h3>
-					<table>
-						<thead>
-							<tr>
-								<th>Date Played</th>
-								<th>Player 1</th>
-								<th>Player 2</th>
-								<th className="table-cancel-row"><i className="fas fa-minus-circle"></i></th>
-							</tr>
-						</thead>
-						<tbody>
-							{leagueDetails.games.map((game) => (
-								<tr key={game.id}>
-									<td>{game.datePlayed}</td>
-									<td>{game.player1score.player.name}{game.winner.id === game.player1score.player.id && <i className="fas fa-trophy winner-trophy"></i>}</td>
-									<td>{game.player2score.player.name}{game.winner.id === game.player2score.player.id && <i className="fas fa-trophy winner-trophy"></i>}</td>
-									<td className="table-cancel-row"><i className="fas fa-minus-circle remove-icon" onClick={removeGameHandler}></i></td>
+							</thead>
+							<tbody>
+								{sortedPlayerList.map((player) => (
+									<tr key={player.player.id}>
+										<td>{player.player.name}</td>
+										<td>{player.role}</td>
+										<td>{player.score}</td>
+									</tr>
+								))}
+							</tbody>
+						</table>
+					</section>
+					<section className='league-details-section'>
+						<h2>Games</h2>
+						<table>
+							<thead>
+								<tr>
+									<th>Date Played</th>
+									<th>Player 1</th>
+									<th>Player 2</th>
+									<th className='table-cancel-row'>
+										<i className='fas fa-minus-circle'></i>
+									</th>
 								</tr>
-							))}
-						</tbody>
-					</table>
+							</thead>
+							<tbody>
+								{leagueDetails.games.map((game) => (
+									<tr key={game.id}>
+										<td>{game.datePlayed}</td>
+										<td>
+											{game.player1score.player.name}
+											{game.winner.id ===
+												game.player1score.player.id && (
+												<i className='fas fa-trophy winner-trophy'></i>
+											)}
+										</td>
+										<td>
+											{game.player2score.player.name}
+											{game.winner.id ===
+												game.player2score.player.id && (
+												<i className='fas fa-trophy winner-trophy'></i>
+											)}
+										</td>
+										<td className='table-cancel-row'>
+											<i
+												className='fas fa-minus-circle remove-icon'
+												onClick={removeGameHandler}
+											></i>
+										</td>
+									</tr>
+								))}
+							</tbody>
+						</table>
+					</section>
 				</div>
 			</React.Fragment>
 		);

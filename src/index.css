@@ -28,6 +28,10 @@ body {
 	background: var(--color-background);
 }
 
+h1 {
+	font-size: 3em;
+}
+
 a {
 	color: var(--color-links);
 }
