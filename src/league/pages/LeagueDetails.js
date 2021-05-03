@@ -103,8 +103,32 @@ const LeagueDetails = (props) => {
 		setAlreadyJoined(false);
 	};
 
-	const removeGameHandler = () => {
-		alert('game removed');
+	const removeGameHandler = async (gameId) => {
+		try {
+			await sendRequest(
+				process.env.REACT_APP_BACKEND_URL +
+					'/leagues/' +
+					leagueId +
+					'/removeGame/' +
+					gameId,
+				'PATCH',
+				JSON.stringify({
+					participantId: auth.userId,
+				}),
+				{
+					'Content-Type': 'application/json',
+					Authorization: 'Bearer ' + auth.token,
+				}
+			);
+			console.log('removed game');
+		} catch (err) {
+			console.log(err.message);
+		}
+		setParticipantsChanged(true);
+	};
+
+	const deleteLeagueHandler = () => {
+		alert('league deletion TBD');
 	};
 
 	if (!leagueDetails) {
@@ -159,6 +183,13 @@ const LeagueDetails = (props) => {
 									danger='true'
 								>
 									LEAVE LEAGUE
+								</Button>
+								<Button
+									onClick={deleteLeagueHandler}
+									type='submit'
+									danger='true'
+								>
+									DELETE LEAGUE
 								</Button>
 							</React.Fragment>
 						)}
@@ -218,7 +249,9 @@ const LeagueDetails = (props) => {
 										<td className='table-cancel-row'>
 											<i
 												className='fas fa-minus-circle remove-icon'
-												onClick={removeGameHandler}
+												onClick={() =>
+													removeGameHandler(game.id)
+												}
 											></i>
 										</td>
 									</tr>
