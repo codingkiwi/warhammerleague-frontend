@@ -198,20 +198,24 @@ const LeagueDetails = (props) => {
 								>
 									SUBMIT GAME
 								</Button>
-								<Button
-									onClick={removeSelfAsParticipantHandler}
-									type='submit'
-									danger='true'
-								>
-									LEAVE LEAGUE
-								</Button>
-								<Button
-									onClick={deleteLeagueHandler}
-									type='submit'
-									danger='true'
-								>
-									DELETE LEAGUE
-								</Button>
+								{playerRole !== 'Admin' && (
+									<Button
+										onClick={removeSelfAsParticipantHandler}
+										type='submit'
+										danger='true'
+									>
+										LEAVE LEAGUE
+									</Button>
+								)}
+								{playerRole === 'Admin' && (
+									<Button
+										onClick={deleteLeagueHandler}
+										type='submit'
+										danger='true'
+									>
+										DELETE LEAGUE
+									</Button>
+								)}
 							</React.Fragment>
 						)}
 					</div>
@@ -244,9 +248,11 @@ const LeagueDetails = (props) => {
 									<th>Date Played</th>
 									<th>Player 1</th>
 									<th>Player 2</th>
-									{playerRole === 'Admin' && <th className='table-cancel-row'>
-										<i className='fas fa-minus-circle'></i>
-									</th>}
+									{playerRole === 'Admin' && (
+										<th className='table-cancel-row'>
+											<i className='fas fa-minus-circle'></i>
+										</th>
+									)}
 								</tr>
 							</thead>
 							<tbody>
@@ -267,14 +273,18 @@ const LeagueDetails = (props) => {
 												<i className='fas fa-trophy winner-trophy'></i>
 											)}
 										</td>
-										{playerRole === 'Admin' && <td className='table-cancel-row'>
-											<i
-												className='fas fa-minus-circle remove-icon'
-												onClick={() =>
-													removeGameHandler(game.id)
-												}
-											></i>
-										</td>}
+										{playerRole === 'Admin' && (
+											<td className='table-cancel-row'>
+												<i
+													className='fas fa-minus-circle remove-icon'
+													onClick={() =>
+														removeGameHandler(
+															game.id
+														)
+													}
+												></i>
+											</td>
+										)}
 									</tr>
 								))}
 							</tbody>
