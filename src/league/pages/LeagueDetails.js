@@ -18,6 +18,7 @@ const LeagueDetails = (props) => {
 	const [sortedPlayerList, setSortedPlayerList] = useState([]);
 	const [participantsChanged, setParticipantsChanged] = useState(false);
 	const [alreadyJoined, setAlreadyJoined] = useState(false);
+	const [playerRole, setPlayerRole] = useState('none');
 
 	useEffect(() => {
 		const fetchLeagues = async () => {
@@ -44,6 +45,9 @@ const LeagueDetails = (props) => {
 
 				if (responseData.joined === 'true') {
 					setAlreadyJoined(true);
+				}
+				if (responseData.role !== null) {
+					setPlayerRole(responseData.role);
 				}
 			} catch (err) {
 				console.log(err.message);
@@ -162,7 +166,7 @@ const LeagueDetails = (props) => {
 							</Button>
 						) : (
 							<p>
-								<em>Already Joined</em>
+								<em>Already Joined as {playerRole}</em>
 							</p>
 						)}
 						{alreadyJoined && (
