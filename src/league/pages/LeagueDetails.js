@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useContext } from 'react';
-import { useParams } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 
 import Button from '../../shared/components/FormElements/Button';
 import { useHttpClient } from '../../shared/hooks/http-hook';
@@ -11,6 +11,7 @@ import { AuthContext } from '../../shared/context/auth-context';
 
 const LeagueDetails = (props) => {
 	const auth = useContext(AuthContext);
+	const history = useHistory();
 	const { isLoading, error, sendRequest, clearError } = useHttpClient();
 
 	const leagueId = useParams().leagueId;
@@ -131,8 +132,24 @@ const LeagueDetails = (props) => {
 		setParticipantsChanged(true);
 	};
 
-	const deleteLeagueHandler = () => {
-		alert('league deletion TBD');
+	const deleteLeagueHandler = async () => {
+		try {
+			await sendRequest(
+				process.env.REACT_APP_BACKEND_URL + '/leagues/' + leagueId,
+				'DELETE',
+				JSON.stringify({
+					participantId: auth.userId,
+				}),
+				{
+					'Content-Type': 'application/json',
+					Authorization: 'Bearer ' + auth.token,
+				}
+			);
+			console.log('removed game');
+		} catch (err) {
+			console.log(err.message);
+		}
+		history.push('/leagues/');
 	};
 
 	if (!leagueDetails) {
@@ -227,9 +244,9 @@ const LeagueDetails = (props) => {
 									<th>Date Played</th>
 									<th>Player 1</th>
 									<th>Player 2</th>
-									<th className='table-cancel-row'>
+									{playerRole === 'Admin' && <th className='table-cancel-row'>
 										<i className='fas fa-minus-circle'></i>
-									</th>
+									</th>}
 								</tr>
 							</thead>
 							<tbody>
@@ -250,14 +267,14 @@ const LeagueDetails = (props) => {
 												<i className='fas fa-trophy winner-trophy'></i>
 											)}
 										</td>
-										<td className='table-cancel-row'>
+										{playerRole === 'Admin' && <td className='table-cancel-row'>
 											<i
 												className='fas fa-minus-circle remove-icon'
 												onClick={() =>
 													removeGameHandler(game.id)
 												}
 											></i>
-										</td>
+										</td>}
 									</tr>
 								))}
 							</tbody>
