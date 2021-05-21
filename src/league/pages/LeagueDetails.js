@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useContext } from 'react';
-import { useHistory, useParams } from 'react-router-dom';
+import { useHistory, useParams, Link } from 'react-router-dom';
 
 import Button from '../../shared/components/FormElements/Button';
 import { useHttpClient } from '../../shared/hooks/http-hook';
@@ -232,7 +232,13 @@ const LeagueDetails = (props) => {
 							<tbody>
 								{sortedPlayerList.map((player) => (
 									<tr key={player.player.id}>
-										<td>{player.player.name}</td>
+										<td>
+											<Link
+												to={'/user/' + player.player.id}
+											>
+												{player.player.name}
+											</Link>
+										</td>
 										<td>{player.role}</td>
 										<td>{player.score}</td>
 									</tr>
@@ -258,7 +264,18 @@ const LeagueDetails = (props) => {
 							<tbody>
 								{leagueDetails.games.map((game) => (
 									<tr key={game.id}>
-										<td>{game.datePlayed}</td>
+										<td>
+											<Link
+												to={
+													'/leagues/' +
+													leagueId +
+													'/games/' +
+													game.id
+												}
+											>
+												{game.datePlayed.slice(0, 10)}
+											</Link>
+										</td>
 										<td>
 											{game.player1score.player.name}
 											{game.winner.id ===

@@ -13,6 +13,8 @@ import LeagueList from './league/pages/LeagueList';
 import LeagueListJoined from './league/pages/LeagueListJoined';
 import LeagueDetails from './league/pages/LeagueDetails';
 import LeagueSubmitGame from './league/pages/LeagueSubmitGame';
+import UserProfile from './user/pages/UserProfile';
+import GameDetails from './league/pages/GameDetails';
 import MainNavigation from './shared/components/Navigation/MainNavigation';
 import { AuthContext } from './shared/context/auth-context';
 import { useAuth } from './shared/hooks/auth-hook';
@@ -25,9 +27,6 @@ const App = () => {
 	if (token) {
 		routes = (
 			<Switch>
-				<Route path='/' exact>
-					<Redirect to='/leagues/explore' />
-				</Route>
 				<Route path='/leagues/explore' exact>
 					<LeagueList />
 				</Route>
@@ -42,6 +41,18 @@ const App = () => {
 				</Route>
 				<Route path='/leagues/:leagueId/submitgame' exact>
 					<LeagueSubmitGame />
+				</Route>
+				<Route path='/leagues/:leagueId/games/:gameId' exact>
+					<GameDetails />
+				</Route>
+				<Route path='/' exact>
+					<Redirect to='/leagues/explore' />
+				</Route>
+				<Route path='/user' exact>
+					<UserProfile />
+				</Route>
+				<Route path='/user/:userId' exact>
+					<UserProfile />
 				</Route>
 				<Redirect to='/' />
 			</Switch>

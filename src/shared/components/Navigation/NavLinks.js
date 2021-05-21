@@ -32,7 +32,9 @@ const NavLinks = (props) => {
 						</NavLink>
 					</li>
 					<li id='user-image'>
-						<img alt='user profile' src={auth.userImage}></img>
+						<NavLink to='/user/' exact>
+							<img alt='user profile' src={auth.userImage}></img>
+						</NavLink>
 					</li>
 				</React.Fragment>
 			)}
