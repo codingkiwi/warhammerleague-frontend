@@ -1,29 +1,109 @@
-import React from 'react';
-import { useParams } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { useParams, Link } from 'react-router-dom';
+
+import { useHttpClient } from '../../shared/hooks/http-hook';
 
 import './UserProfile.css';
 
-// import ErrorModal from '../../shared/components/UIElements/ErrorModal';
-// import LoadingSpinner from '../../shared/components/UIElements/LoadingSpinner';
+import ErrorModal from '../../shared/components/UIElements/ErrorModal';
+import LoadingSpinner from '../../shared/components/UIElements/LoadingSpinner';
 // import { AuthContext } from '../../shared/context/auth-context';
 
 const UserProfile = (props) => {
 	// const auth = useContext(AuthContext);
 	const userId = useParams().userId;
+	const [userDetails, setUserDetails] = useState([]);
+	const [userMainDetails, setUserMainDetails] = useState([]);
+	const { isLoading, error, sendRequest, clearError } = useHttpClient();
 
-    console.log(userId);
+	useEffect(() => {
+		const fetchUserDetails = async () => {
+			try {
+				const responseData = await sendRequest(
+					process.env.REACT_APP_BACKEND_URL + '/users/' + userId
+				);
+				setUserDetails(responseData.games);
+				setUserMainDetails(responseData.user);
+			} catch (err) {
+				console.log(err.message);
+			}
+		};
+		fetchUserDetails();
+	}, [sendRequest, userId]);
 
 	if (!userId) {
 		return (
-			<div className='main-container'>
-				<p>user profile for self</p>
-			</div>
+			<React.Fragment>
+				<ErrorModal error={error} onClear={clearError} />
+				<div>
+					{isLoading && <LoadingSpinner asOverlay />}
+					<p>no user details</p>
+				</div>
+			</React.Fragment>
+		);
+	} else if (!userDetails) {
+		return (
+			<React.Fragment>
+				<ErrorModal error={error} onClear={clearError} />
+				<div>
+					{isLoading && <LoadingSpinner asOverlay />}
+					<p>no user details</p>
+				</div>
+			</React.Fragment>
 		);
 	} else {
+		if (userDetails.length !== 0) console.log(userDetails);
 		return (
-			<div className='main-container'>
-				<p>user profile for {userId}</p>
-			</div>
+			<React.Fragment>
+				<ErrorModal error={error} onClear={clearError} />
+				{isLoading && <LoadingSpinner asOverlay />}
+				<div className='main-container'>
+					<h1>{userMainDetails.name}</h1>
+					<div className='table-container'>
+						<table>
+							<thead>
+								<tr>
+									<th>Date Played</th>
+									<th>Player 1</th>
+									<th>Player 2</th>
+								</tr>
+							</thead>
+							<tbody>
+								{userDetails.map((game) => (
+									<tr key={game._id}>
+										<td>
+											<Link
+												to={
+													'/leagues/' +
+													'tofix' + // TO DO: find correct way of sending league id through with games from the server
+													'/games/' +
+													game.id
+												}
+											>
+												{game.datePlayed.slice(0, 10)}
+											</Link>
+										</td>
+										<td>
+											{game.player1score.player.name}
+											{game.winner.id ===
+												game.player1score.player.id && (
+												<i className='fas fa-trophy winner-trophy'></i>
+											)}
+										</td>
+										<td>
+											{game.player2score.player.name}
+											{game.winner.id ===
+												game.player2score.player.id && (
+												<i className='fas fa-trophy winner-trophy'></i>
+											)}
+										</td>
+									</tr>
+								))}
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</React.Fragment>
 		);
 	}
 };

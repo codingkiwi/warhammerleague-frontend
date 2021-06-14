@@ -1,6 +1,8 @@
 import React from 'react';
 import { useParams } from 'react-router-dom';
 
+// import { useHttpClient } from '../../shared/hooks/http-hook';
+
 import './GameDetails.css';
 
 // import ErrorModal from '../../shared/components/UIElements/ErrorModal';
@@ -10,8 +12,10 @@ import './GameDetails.css';
 const GameDetails = (props) => {
 	const gameId = useParams().gameId;
 
+	
+
 	return (
-		<section class='main-container'>
+		<section className='main-container'>
 			<p>game details for {gameId}</p>
 		</section>
 	);
