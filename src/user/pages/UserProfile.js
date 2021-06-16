@@ -59,48 +59,62 @@ const UserProfile = (props) => {
 				{isLoading && <LoadingSpinner asOverlay />}
 				<div className='main-container'>
 					<h1>{userMainDetails.name}</h1>
-					<div className='table-container'>
-						<table>
-							<thead>
-								<tr>
-									<th>Date Played</th>
-									<th>Player 1</th>
-									<th>Player 2</th>
-								</tr>
-							</thead>
-							<tbody>
-								{userDetails.map((game) => (
-									<tr key={game._id}>
-										<td>
-											<Link
-												to={
-													'/leagues/' +
-													'tofix' + // TO DO: find correct way of sending league id through with games from the server
-													'/games/' +
-													game.id
-												}
-											>
-												{game.datePlayed.slice(0, 10)}
-											</Link>
-										</td>
-										<td>
-											{game.player1score.player.name}
-											{game.winner.id ===
-												game.player1score.player.id && (
-												<i className='fas fa-trophy winner-trophy'></i>
-											)}
-										</td>
-										<td>
-											{game.player2score.player.name}
-											{game.winner.id ===
-												game.player2score.player.id && (
-												<i className='fas fa-trophy winner-trophy'></i>
-											)}
-										</td>
+					<div className='league-details'>
+						<h2>Games Played</h2>
+						<div className='table-container'>
+							<table>
+								<thead>
+									<tr>
+										<th>Date Played</th>
+										<th>Player 1</th>
+										<th>Player 2</th>
 									</tr>
-								))}
-							</tbody>
-						</table>
+								</thead>
+								<tbody>
+									{userDetails.map((game) => (
+										<tr key={game.game._id}>
+											<td>
+												<Link
+													to={
+														'/leagues/' +
+														game.leagueId + // TO DO: find correct way of sending league id through with games from the server
+														'/games/' +
+														game.game._id
+													}
+												>
+													{game.game.datePlayed.slice(
+														0,
+														10
+													)}
+												</Link>
+											</td>
+											<td>
+												{
+													game.game.player1score
+														.player.name
+												}
+												{game.game.winner._id ===
+													game.game.player1score
+														.player._id && (
+													<i className='fas fa-trophy winner-trophy'></i>
+												)}
+											</td>
+											<td>
+												{
+													game.game.player2score
+														.player.name
+												}
+												{game.game.winner._id ===
+													game.game.player2score
+														.player._id && (
+													<i className='fas fa-trophy winner-trophy'></i>
+												)}
+											</td>
+										</tr>
+									))}
+								</tbody>
+							</table>
+						</div>
 					</div>
 				</div>
 			</React.Fragment>
