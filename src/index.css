@@ -97,3 +97,7 @@ th, td {
 th {
 	background-color: var(--color-section-medium);
 }
+
+.table-row-bold {
+	font-weight: 800;
+}
