@@ -66,6 +66,7 @@ const UserProfile = (props) => {
 								<thead>
 									<tr>
 										<th>Date Played</th>
+										<th>League</th>
 										<th>Player 1</th>
 										<th>Player 2</th>
 									</tr>
@@ -77,7 +78,7 @@ const UserProfile = (props) => {
 												<Link
 													to={
 														'/leagues/' +
-														game.leagueId + // TO DO: find correct way of sending league id through with games from the server
+														game.leagueId +
 														'/games/' +
 														game.game._id
 													}
@@ -86,6 +87,16 @@ const UserProfile = (props) => {
 														0,
 														10
 													)}
+												</Link>
+											</td>
+											<td>
+												<Link
+													to={
+														'/leagues/' +
+														game.leagueId
+													}
+												>
+													{game.leagueName}
 												</Link>
 											</td>
 											<td>
