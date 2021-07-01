@@ -15,7 +15,6 @@ const UserProfile = (props) => {
 	const [userDetails, setUserDetails] = useState([]);
 	const [userMainDetails, setUserMainDetails] = useState([]);
 	const { isLoading, error, sendRequest, clearError } = useHttpClient();
-	const [fakeError, setFakeError] = useState("this is a dummy error");
 
 	useEffect(() => {
 		const fetchUserDetails = async () => {
@@ -35,7 +34,7 @@ const UserProfile = (props) => {
 	if (!userId) {
 		return (
 			<React.Fragment>
-				<ErrorModal error={fakeError} onClear={clearError} />
+				<ErrorModal error={error} onClear={clearError} />
 				<div>
 					{isLoading && <LoadingSpinner asOverlay />}
 					<p>no user details</p>

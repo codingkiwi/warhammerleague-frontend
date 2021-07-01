@@ -22,6 +22,8 @@ import { useAuth } from './shared/hooks/auth-hook';
 const App = () => {
 	const { userId, token, image, login, logout } = useAuth();
 
+	const userProfilePath = '/user/' + userId;
+
 	let routes;
 
 	if (token) {
@@ -49,7 +51,7 @@ const App = () => {
 					<Redirect to='/leagues/explore' />
 				</Route>
 				<Route path='/user' exact>
-					<UserProfile />
+					<Redirect to={userProfilePath} />
 				</Route>
 				<Route path='/user/:userId' exact>
 					<UserProfile />
