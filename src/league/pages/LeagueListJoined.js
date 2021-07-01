@@ -4,6 +4,8 @@ import { Link } from 'react-router-dom';
 import { useHttpClient } from '../../shared/hooks/http-hook';
 import { AuthContext } from '../../shared/context/auth-context';
 
+import ErrorModal from '../../shared/components/UIElements/ErrorModal';
+import LoadingSpinner from '../../shared/components/UIElements/LoadingSpinner';
 import './LeagueListJoined.css';
 
 const LeagueList = (props) => {
@@ -33,13 +35,10 @@ const LeagueList = (props) => {
 		fetchLeagues();
 	}, [sendRequest, auth.token, auth.userId]);
 
-	//hack to allow build without warnings
-	if (error) {
-		console.log(isLoading + error + clearError);
-	}
-
 	return (
 		<React.Fragment>
+			<ErrorModal error={error} onClear={clearError} />
+			{isLoading && <LoadingSpinner asOverlay />}
 			<div class='main-container'>
 				<h1>My Ladders</h1>
 				<div class='table-container'>

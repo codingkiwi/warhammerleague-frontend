@@ -5,6 +5,8 @@ import { useHttpClient } from '../../shared/hooks/http-hook';
 import Input from '../../shared/components/FormElements/Input';
 import { useForm } from '../../shared/hooks/form-hook';
 
+import ErrorModal from '../../shared/components/UIElements/ErrorModal';
+import LoadingSpinner from '../../shared/components/UIElements/LoadingSpinner';
 import './LeagueList.css';
 
 const LeagueList = (props) => {
@@ -41,13 +43,10 @@ const LeagueList = (props) => {
 		event.preventDefault();
 	};
 
-	//hack to allow build without warnings
-	if (error) {
-		console.log(isLoading + error + clearError);
-	}
-
 	return (
 		<React.Fragment>
+			<ErrorModal error={error} onClear={clearError} />
+			{isLoading && <LoadingSpinner asOverlay />}
 			<div className='main-container'>
 				<div className='league-search'>
 					<h1>Find a 40k Ladder</h1>
@@ -81,9 +80,11 @@ const LeagueList = (props) => {
 								)
 								.map((league) => (
 									<tr key={league.id}>
-										<td><Link to={'/leagues/' + league.id}>
+										<td>
+											<Link to={'/leagues/' + league.id}>
 												{league.name}
-											</Link></td>
+											</Link>
+										</td>
 										<td>{league.location}</td>
 										<td>{league.players.length}</td>
 									</tr>
