@@ -7,13 +7,12 @@ const ConfirmationModal = (props) => {
 	return (
 		<Modal
 			onCancel={props.onClear}
-			onSubmit={props.onSubmit}
 			header='Are You Sure?'
 			show={!!props.confirmation}
 			footer={
 				<React.Fragment>
-					<Button onClick={props.onSubmit}>Proceed</Button>
-					<Button onCancel={props.onCancel}>Cancel</Button>
+					<Button onClick={props.onConfirm}>Proceed</Button>
+					<Button onClick={props.onClear}>Cancel</Button>
 				</React.Fragment>
 			}
 		>

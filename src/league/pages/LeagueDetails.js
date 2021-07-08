@@ -22,6 +22,7 @@ const LeagueDetails = (props) => {
 	const [alreadyJoined, setAlreadyJoined] = useState(false);
 	const [playerRole, setPlayerRole] = useState('none');
 	const [confirmationQuestion, setConfirmationQuestion] = useState();
+	const [confirmationFunction, setConfirmationFunction] = useState();
 
 	useEffect(() => {
 		const fetchLeagues = async () => {
@@ -110,36 +111,40 @@ const LeagueDetails = (props) => {
 		setAlreadyJoined(false);
 	};
 
-	//TODO: implement delete confirmation modal
+	const removeGameConfirmation = (gameId) => {
+		setConfirmationQuestion(
+			'Are you sure you want to remove this game? All data will be permanently lost'
+		);
+		setConfirmationFunction(() => () => { //passing a function that returns a function so that useState won't evaluate the whole thing
+			removeGameHandler(gameId);
+			setConfirmationQuestion();
+		});
+	};
 
-	// const removeGameHandler = async (gameId) => {
-	// 	try {
-	// 		await sendRequest(
-	// 			process.env.REACT_APP_BACKEND_URL +
-	// 				'/leagues/' +
-	// 				leagueId +
-	// 				'/removeGame/' +
-	// 				gameId,
-	// 			'PATCH',
-	// 			JSON.stringify({
-	// 				participantId: auth.userId,
-	// 			}),
-	// 			{
-	// 				'Content-Type': 'application/json',
-	// 				Authorization: 'Bearer ' + auth.token,
-	// 			}
-	// 		);
-	// 		console.log('removed game');
-	// 	} catch (err) {
-	// 		console.log(err.message);
-	// 	}
-	// 	setParticipantsChanged(true);
-	// };
-
-	const removeGameHandler = () => {
-		setConfirmationQuestion('Are you sure you want to remove this game? All data will be permanently lost');
-	}
-
+	const removeGameHandler = async (gameId) => {
+		try {
+			await sendRequest(
+				process.env.REACT_APP_BACKEND_URL +
+					'/leagues/' +
+					leagueId +
+					'/removeGame/' +
+					gameId,
+				'PATCH',
+				JSON.stringify({
+					participantId: auth.userId,
+				}),
+				{
+					'Content-Type': 'application/json',
+					Authorization: 'Bearer ' + auth.token,
+				}
+			);
+			console.log('removed game');
+		} catch (err) {
+			console.log(err.message);
+		}
+		setParticipantsChanged(true);
+	};
+	
 	const deleteLeagueHandler = async () => {
 		try {
 			await sendRequest(
@@ -174,7 +179,11 @@ const LeagueDetails = (props) => {
 		return (
 			<React.Fragment>
 				<ErrorModal error={error} onClear={clearError} />
-				<ConfirmationModal confirmation={confirmationQuestion} onClear={()=>console.log("cleared")} onSubmit={()=>console.log("confirmed")}/>
+				<ConfirmationModal
+					confirmation={confirmationQuestion}
+					onClear={() => setConfirmationQuestion()}
+					onConfirm={confirmationFunction}
+				/>
 				<div className='main-container'>
 					<div className='league-details-header'>
 						{isLoading && <LoadingSpinner asOverlay />}
@@ -304,7 +313,7 @@ const LeagueDetails = (props) => {
 												<i
 													className='fas fa-minus-circle remove-icon'
 													onClick={() =>
-														removeGameHandler(
+														removeGameConfirmation(
 															game.id
 														)
 													}
