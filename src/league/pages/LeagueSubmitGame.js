@@ -1,5 +1,5 @@
 import React, { useContext, useState, useEffect } from 'react';
-import { useHistory, useParams } from 'react-router-dom';
+import { useParams, Redirect } from 'react-router-dom';
 
 import Input from '../../shared/components/FormElements/Input';
 import ErrorModal from '../../shared/components/UIElements/ErrorModal';
@@ -27,6 +27,9 @@ const LeagueSubmitGame = (props) => {
 	// const [leagueParticipants, setLeagueParticipants] = useState();
 	const [leagueParticipantsWithId, setLeagueParticipantsWithId] = useState();
 	const [alreadyJoined, setAlreadyJoined] = useState(false);
+	const [redirect, setRedirect] = useState();
+
+	// const history = useHistory();
 
 	useEffect(() => {
 		const fetchLeagues = async () => {
@@ -108,8 +111,6 @@ const LeagueSubmitGame = (props) => {
 		false
 	);
 
-	const history = useHistory();
-
 	const submitGameHandler = async (event) => {
 		event.preventDefault();
 
@@ -140,17 +141,22 @@ const LeagueSubmitGame = (props) => {
 					Authorization: 'Bearer ' + auth.token,
 				}
 			);
-			history.push('/leagues/' + leagueId);
+			setRedirect('/leagues/' + leagueId);
+			// history.push('/leagues/' + leagueId);
 			// window.location.reload(true);
 		} catch (err) {}
 	};
 
-	if (alreadyJoined) {
+	if (redirect) {
 		return (
-			<Card className="submit-game-form">
+			<Redirect to={{ pathname: redirect, state: { redirect: true } }} />
+		);
+	} else if (alreadyJoined) {
+		return (
+			<Card className='submit-game-form'>
 				<ErrorModal error={error} onClear={clearError} />
 				<h2>Submit game results</h2>
-				<hr/>
+				<hr />
 				<form onSubmit={submitGameHandler}>
 					{isLoading && <LoadingSpinner asOverlay />}
 					<Input
@@ -239,7 +245,7 @@ const LeagueSubmitGame = (props) => {
 						errorText='please enter player 1s faction'
 						onInput={inputHandler}
 					/>
-					<hr/>
+					<hr />
 					<Input
 						id='player2'
 						label='Player 2'

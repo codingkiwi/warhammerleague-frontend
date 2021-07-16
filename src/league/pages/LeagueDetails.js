@@ -115,7 +115,8 @@ const LeagueDetails = (props) => {
 		setConfirmationQuestion(
 			'Are you sure you want to remove this game? All data will be permanently lost'
 		);
-		setConfirmationFunction(() => () => { //passing a function that returns a function so that useState won't evaluate the whole thing
+		setConfirmationFunction(() => () => {
+			//passing a function that returns a function so that useState won't evaluate the whole thing
 			removeGameHandler(gameId);
 			setConfirmationQuestion();
 		});
@@ -144,7 +145,18 @@ const LeagueDetails = (props) => {
 		}
 		setParticipantsChanged(true);
 	};
-	
+
+	const deleteLeagueConfirmation = () => {
+		setConfirmationQuestion(
+			'Are you sure you want to delete this league? All data will be permanently lost'
+		);
+		setConfirmationFunction(() => () => {
+			//passing a function that returns a function so that useState won't evaluate the whole thing
+			deleteLeagueHandler();
+			setConfirmationQuestion();
+		});
+	};
+
 	const deleteLeagueHandler = async () => {
 		try {
 			await sendRequest(
@@ -227,7 +239,7 @@ const LeagueDetails = (props) => {
 								)}
 								{playerRole === 'Admin' && (
 									<Button
-										onClick={deleteLeagueHandler}
+										onClick={deleteLeagueConfirmation}
 										type='submit'
 										danger='true'
 									>

@@ -38,7 +38,11 @@ const App = () => {
 				<Route path='/leagues/create' exact>
 					<CreateLeague />
 				</Route>
-				<Route path='/leagues/:leagueId' exact>
+				<Route
+					path='/leagues/:leagueId'
+					key={document.location.href}
+					exact
+				>
 					<LeagueDetails />
 				</Route>
 				<Route path='/leagues/:leagueId/submitgame' exact>
