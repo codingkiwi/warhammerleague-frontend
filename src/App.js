@@ -12,6 +12,7 @@ import CreateLeague from './league/pages/CreateLeague';
 import LeagueList from './league/pages/LeagueList';
 import LeagueListJoined from './league/pages/LeagueListJoined';
 import LeagueDetails from './league/pages/LeagueDetails';
+import EditLeague from './league/pages/EditLeague';
 import LeagueSubmitGame from './league/pages/LeagueSubmitGame';
 import UserProfile from './user/pages/UserProfile';
 import GameDetails from './league/pages/GameDetails';
@@ -44,6 +45,9 @@ const App = () => {
 					exact
 				>
 					<LeagueDetails />
+				</Route>
+				<Route path='/leagues/:leagueId/edit' exact>
+					<EditLeague />
 				</Route>
 				<Route path='/leagues/:leagueId/submitgame' exact>
 					<LeagueSubmitGame />
