@@ -54,7 +54,6 @@ const EditLeague = (props) => {
 				);
 				setLeagueDetails(responseData.league);
 				console.log(responseData.league);
-				//set form inputs to existing values here
 				setFormData({
 					name: {
 						value: responseData.league.name,
@@ -78,25 +77,27 @@ const EditLeague = (props) => {
 
 	const history = useHistory();
 
-	const leagueSubmitHandler = async (event) => {
+	const leagueUpdateHandler = async (event) => {
 		event.preventDefault();
 
 		try {
 			await sendRequest(
-				process.env.REACT_APP_BACKEND_URL + '/leagues/',
-				'POST',
+				process.env.REACT_APP_BACKEND_URL +
+					'/leagues/' +
+					leagueId +
+					'/edit',
+				'PATCH',
 				JSON.stringify({
 					name: formState.inputs.name.value,
 					description: formState.inputs.description.value,
 					location: formState.inputs.location.value,
-					participantId: auth.userId,
 				}),
 				{
 					'Content-Type': 'application/json',
 					Authorization: 'Bearer ' + auth.token,
 				}
 			);
-			history.push('/');
+			history.push('/leagues/' + leagueId);
 		} catch (err) {}
 	};
 
@@ -116,7 +117,7 @@ const EditLeague = (props) => {
 				<ErrorModal error={error} onClear={clearError} />
 				<h2>Create a ranked ladder</h2>
 				<hr />
-				<form onSubmit={leagueSubmitHandler}>
+				<form onSubmit={leagueUpdateHandler}>
 					{isLoading && <LoadingSpinner asOverlay />}
 					<Input
 						id='name'
@@ -149,7 +150,7 @@ const EditLeague = (props) => {
 						initialValid={true}
 					/>
 					<Button type='submit' disabled={!formState.isValid}>
-						Create ladder
+						Edit League Details
 					</Button>
 				</form>
 			</Card>

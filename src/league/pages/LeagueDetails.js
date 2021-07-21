@@ -237,16 +237,18 @@ const LeagueDetails = (props) => {
 										LEAVE LEAGUE
 									</Button>
 								)}
-								<Button
-									to={{
-										pathname:
-											'/leagues/' +
-											leagueId +
-											'/edit',
-									}}
-								>
-									EDIT GAME
-								</Button>
+								{playerRole === 'Admin' && (
+									<Button
+										to={{
+											pathname:
+												'/leagues/' +
+												leagueId +
+												'/edit',
+										}}
+									>
+										EDIT LEAGUE
+									</Button>
+								)}
 								{playerRole === 'Admin' && (
 									<Button
 										onClick={deleteLeagueConfirmation}
