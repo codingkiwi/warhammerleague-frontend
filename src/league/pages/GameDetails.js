@@ -1,18 +1,36 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import { useParams, Link } from 'react-router-dom';
 
 import { useHttpClient } from '../../shared/hooks/http-hook';
+import { AuthContext } from '../../shared/context/auth-context';
 
 import ErrorModal from '../../shared/components/UIElements/ErrorModal';
 import LoadingSpinner from '../../shared/components/UIElements/LoadingSpinner';
+import Button from '../../shared/components/FormElements/Button';
 
 import './GameDetails.css';
 
 const GameDetails = (props) => {
+	const auth = useContext(AuthContext);
 	const gameId = useParams().gameId;
 	const leagueId = useParams().leagueId;
 	const [gameDetails, setGameDetails] = useState();
+	const [userIsInGame, setUserIsInGame] = useState(false);
+	const [batRepExists, setBatRepExists] = useState(false);
 	const { isLoading, error, sendRequest, clearError } = useHttpClient();
+
+	const [editorActiveState, setEditorActiveState] = useState('hide-editor');
+	const [batrepActiveState, setBatrepActiveState] = useState('show-editor');
+
+	const batrepEditHandler = () => {
+		setBatrepActiveState('hide-editor');
+		setEditorActiveState('show-editor');
+	};
+
+	const batrepSaveHandler = () => {
+		setBatrepActiveState('show-editor');
+		setEditorActiveState('hide-editor');
+	};
 
 	useEffect(() => {
 		const fetchGameDetails = async () => {
@@ -25,12 +43,30 @@ const GameDetails = (props) => {
 						gameId
 				);
 				setGameDetails(responseData.game);
+
+				//checks whether logged in user is in the current game
+				if (responseData.game) {
+					if (
+						responseData.game.batrep !== '' &&
+						responseData.game.batrep !== undefined
+					) {
+						setBatRepExists(true);
+					}
+					if (
+						auth.userId ===
+							responseData.game.player1score.player.id ||
+						auth.userId === responseData.game.player2score.player.id
+					) {
+						setUserIsInGame(true);
+					}
+					console.log(responseData.game.batrep);
+				}
 			} catch (err) {
 				console.log(err.message);
 			}
 		};
 		fetchGameDetails();
-	}, [sendRequest, gameId, leagueId]);
+	}, [sendRequest, gameId, leagueId, auth.userId]);
 
 	if (!gameDetails) {
 		return (
@@ -150,6 +186,31 @@ const GameDetails = (props) => {
 								</tr>
 							</tbody>
 						</table>
+						<h2>Battle Report</h2>
+						{userIsInGame && (
+							<React.Fragment>
+								{batrepActiveState === 'show-editor' && (
+									<Button onClick={batrepEditHandler}>
+										Edit Battle Report
+									</Button>
+								)}
+								{batrepActiveState === 'hide-editor' && (
+									<Button onClick={batrepSaveHandler}>
+										Save Battle Report
+									</Button>
+								)}
+							</React.Fragment>
+						)}
+						<div className={batrepActiveState}>
+							{!batRepExists ? (
+								<p>No batrep has been written for this game</p>
+							) : (
+								<p>This batrep has been written</p>
+							)}
+						</div>
+						<div className={editorActiveState}>
+							<p>**React Markdown Editor Goes Here**</p>
+						</div>
 					</div>
 				</div>
 			</React.Fragment>
