@@ -1,5 +1,8 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { useParams, Link } from 'react-router-dom';
+import ReactMde from 'react-mde';
+import * as Showdown from 'showdown';
+import 'react-mde/lib/styles/css/react-mde-all.css';
 
 import { useHttpClient } from '../../shared/hooks/http-hook';
 import { AuthContext } from '../../shared/context/auth-context';
@@ -10,6 +13,13 @@ import Button from '../../shared/components/FormElements/Button';
 
 import './GameDetails.css';
 
+const converter = new Showdown.Converter({
+	tables: true,
+	simplifiedAutoLink: true,
+	strikethrough: true,
+	tasklists: true,
+});
+
 const GameDetails = (props) => {
 	const auth = useContext(AuthContext);
 	const gameId = useParams().gameId;
@@ -19,6 +29,10 @@ const GameDetails = (props) => {
 	const [batRepExists, setBatRepExists] = useState(false);
 	const { isLoading, error, sendRequest, clearError } = useHttpClient();
 
+	const [editorValue, setEditorValue] = useState(
+		'**Write your battle report here using markdown**'
+	);
+	const [selectedTab, setSelectedTab] = useState('write');
 	const [editorActiveState, setEditorActiveState] = useState('hide-editor');
 	const [batrepActiveState, setBatrepActiveState] = useState('show-editor');
 
@@ -27,9 +41,29 @@ const GameDetails = (props) => {
 		setEditorActiveState('show-editor');
 	};
 
-	const batrepSaveHandler = () => {
+	const batrepSaveHandler = async () => {
 		setBatrepActiveState('show-editor');
 		setEditorActiveState('hide-editor');
+
+		try {
+			await sendRequest(
+				process.env.REACT_APP_BACKEND_URL +
+					'/leagues/' +
+					leagueId +
+					'/updateGame/' +
+					gameId,
+				'PATCH',
+				JSON.stringify({
+					batrep: editorValue,
+				}),
+				{
+					'Content-Type': 'application/json',
+					Authorization: 'Bearer ' + auth.token,
+				}
+			);
+		} catch (err) {
+			console.log(err.message);
+		}
 	};
 
 	useEffect(() => {
@@ -60,6 +94,10 @@ const GameDetails = (props) => {
 						setUserIsInGame(true);
 					}
 					console.log(responseData.game.batrep);
+					if (responseData.game.batrep !== false) {
+						setEditorValue(responseData.game.batrep);
+					}
+					setEditorValue(responseData.game.batrep);
 				}
 			} catch (err) {
 				console.log(err.message);
@@ -205,11 +243,21 @@ const GameDetails = (props) => {
 							{!batRepExists ? (
 								<p>No batrep has been written for this game</p>
 							) : (
-								<p>This batrep has been written</p>
+								<p>{editorValue}</p>
 							)}
 						</div>
 						<div className={editorActiveState}>
-							<p>**React Markdown Editor Goes Here**</p>
+							<ReactMde
+								value={editorValue}
+								onChange={setEditorValue}
+								selectedTab={selectedTab}
+								onTabChange={setSelectedTab}
+								generateMarkdownPreview={(markdown) =>
+									Promise.resolve(
+										converter.makeHtml(markdown)
+									)
+								}
+							/>
 						</div>
 					</div>
 				</div>
