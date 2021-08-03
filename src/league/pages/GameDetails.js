@@ -3,6 +3,7 @@ import { useParams, Link } from 'react-router-dom';
 import ReactMde from 'react-mde';
 import * as Showdown from 'showdown';
 import 'react-mde/lib/styles/css/react-mde-all.css';
+import ReactHtmlParser from 'react-html-parser';
 
 import { useHttpClient } from '../../shared/hooks/http-hook';
 import { AuthContext } from '../../shared/context/auth-context';
@@ -32,6 +33,8 @@ const GameDetails = (props) => {
 	const [editorValue, setEditorValue] = useState(
 		'**Write your battle report here using markdown**'
 	);
+	const [initialEditorValue, setInitialEditorValue] = useState();
+	const [convertedHTMLEditorValue, setConvertedHTMLEditorValue] = useState();
 	const [selectedTab, setSelectedTab] = useState('write');
 	const [editorActiveState, setEditorActiveState] = useState('hide-editor');
 	const [batrepActiveState, setBatrepActiveState] = useState('show-editor');
@@ -61,9 +64,18 @@ const GameDetails = (props) => {
 					Authorization: 'Bearer ' + auth.token,
 				}
 			);
+			let html = converter.makeHtml(editorValue);
+			setConvertedHTMLEditorValue(html);
+			setInitialEditorValue(editorValue);
 		} catch (err) {
 			console.log(err.message);
 		}
+	};
+
+	const cancelEditHandler = async () => {
+		setBatrepActiveState('show-editor');
+		setEditorActiveState('hide-editor');
+		setEditorValue(initialEditorValue);
 	};
 
 	useEffect(() => {
@@ -85,6 +97,7 @@ const GameDetails = (props) => {
 						responseData.game.batrep !== undefined
 					) {
 						setBatRepExists(true);
+						setEditorValue(responseData.game.batrep);
 					}
 					if (
 						auth.userId ===
@@ -93,11 +106,8 @@ const GameDetails = (props) => {
 					) {
 						setUserIsInGame(true);
 					}
-					console.log(responseData.game.batrep);
-					if (responseData.game.batrep !== false) {
-						setEditorValue(responseData.game.batrep);
-					}
-					setEditorValue(responseData.game.batrep);
+					let html = converter.makeHtml(responseData.game.batrep);
+					setConvertedHTMLEditorValue(html);
 				}
 			} catch (err) {
 				console.log(err.message);
@@ -224,40 +234,53 @@ const GameDetails = (props) => {
 								</tr>
 							</tbody>
 						</table>
-						<h2>Battle Report</h2>
-						{userIsInGame && (
-							<React.Fragment>
-								{batrepActiveState === 'show-editor' && (
-									<Button onClick={batrepEditHandler}>
-										Edit Battle Report
-									</Button>
-								)}
-								{batrepActiveState === 'hide-editor' && (
-									<Button onClick={batrepSaveHandler}>
-										Save Battle Report
-									</Button>
-								)}
-							</React.Fragment>
-						)}
-						<div className={batrepActiveState}>
-							{!batRepExists ? (
-								<p>No batrep has been written for this game</p>
-							) : (
-								<p>{editorValue}</p>
+						<div className='battle-report'>
+							<h2>Battle Report</h2>
+							{userIsInGame && (
+								<React.Fragment>
+									{batrepActiveState === 'show-editor' && (
+										<Button onClick={batrepEditHandler}>
+											Edit Battle Report
+										</Button>
+									)}
+									{batrepActiveState === 'hide-editor' && (
+										<React.Fragment>
+											<Button onClick={batrepSaveHandler}>
+												Save Battle Report
+											</Button>
+											<Button onClick={cancelEditHandler}>
+												Cancel
+											</Button>
+										</React.Fragment>
+									)}
+								</React.Fragment>
 							)}
-						</div>
-						<div className={editorActiveState}>
-							<ReactMde
-								value={editorValue}
-								onChange={setEditorValue}
-								selectedTab={selectedTab}
-								onTabChange={setSelectedTab}
-								generateMarkdownPreview={(markdown) =>
-									Promise.resolve(
-										converter.makeHtml(markdown)
-									)
-								}
-							/>
+							<div className={batrepActiveState}>
+								{!batRepExists ? (
+									<p>
+										No batrep has been written for this game
+									</p>
+								) : (
+									<p>
+										{ReactHtmlParser(
+											convertedHTMLEditorValue
+										)}
+									</p>
+								)}
+							</div>
+							<div className={editorActiveState}>
+								<ReactMde
+									value={editorValue}
+									onChange={setEditorValue}
+									selectedTab={selectedTab}
+									onTabChange={setSelectedTab}
+									generateMarkdownPreview={(markdown) =>
+										Promise.resolve(
+											converter.makeHtml(markdown)
+										)
+									}
+								/>
+							</div>
 						</div>
 					</div>
 				</div>

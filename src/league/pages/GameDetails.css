@@ -5,3 +5,11 @@
 .show-editor {
     display: block;
 }
+
+.battle-report {
+    margin-top: 40px;
+}
+
+.battle-report button {
+    margin-bottom: 20px;
+}
