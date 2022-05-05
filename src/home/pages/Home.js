@@ -12,7 +12,7 @@ const Home = () => {
 			<div className='home-container-hero'>
 				<h1>40k Ranked Ladder Manager</h1>
 				<h3>Create and manage ranked ladders for Warhammer 40k</h3>
-				<Button to='/auth'>Get Started</Button>
+				<Button to='/auth' cta >Get Started</Button>
 			</div>
 			<div className='home-container-subhero' style={{backgroundImage:`url(${texture})`}}>
 				<div className='home-subhero-contents'>

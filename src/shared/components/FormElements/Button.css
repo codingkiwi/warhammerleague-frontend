@@ -79,3 +79,21 @@ a.button--small {
 a.button--big {
 	font-size: 1.5rem;
 }
+
+a.button--cta {
+	font-size: 1.1rem;
+	border-radius: 50px;
+	margin-top: 10px;
+	width: 200px;
+}
+
+@media screen and (max-width: 700px) {
+	a.button--cta {
+		font-size: 1.1rem;
+		border-radius: 50px;
+		margin-top: 10px;
+		width: 80%;
+		max-width: 300px;
+		min-width: 150px;
+	}
+}
