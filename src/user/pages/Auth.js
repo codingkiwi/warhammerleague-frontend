@@ -128,6 +128,7 @@ const Auth = () => {
 						<ImageUpload
 							id='image'
 							center
+							label='Your Profile Image'
 							onInput={inputHandler}
 							errorText='Please provide an image.'
 						/>
